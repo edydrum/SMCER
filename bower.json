@@ -1,10 +1,11 @@
 {
-  "name": "Merkador",
+  "name": "SMCER",
   "version": "1.3.0",
   "authors": [
-    "Vinicius Carvalho"
+    "Vinicius Carvalho",
+    "Alexandre Manoel da Silva"
   ],
-  "description": "Merkador App",
+  "description": "SMCER App",
   "keywords": [
     "AngularJS",
     "admin",
@@ -29,8 +30,6 @@
     "app",
     "widgets"
   ],
-  "license": "Envato REGULAR LICENSE",
-  "homepage": "http://themeforest.net/item/cliptwo-bootstrap-admin-template-with-angularjs/10290688",
   "private": true,
   "ignore": [
     "**/.*",

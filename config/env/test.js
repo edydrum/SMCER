@@ -1,7 +1,7 @@
 module.exports = {
     env: 'test',
-    db: 'mongodb://localhost/Merkador_test',
-    sauceTestName: 'Merkador E2E Testing',
+    db: 'mongodb://localhost/SMCER_test',
+    sauceTestName: 'SMCER E2E Testing',
     sauceUser: process.env.SAUCE_USERNAME,
     sauceKey: process.env.SAUCE_ACCESS_KEY,
     travisJobNumber: process.env.TRAVIS_JOB_NUMBER,

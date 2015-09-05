@@ -1,7 +1,7 @@
 {
-  "name": "ClipTwo",
+  "name": "SMCER",
   "version": "1.3.0",
-  "description": "AngularJs Bootstrap Admin Template",
+  "description": "Sistema para Monitoramento do Consumo Elétrico Residêncial",
   "scripts": {
     "start": "node node_modules/http-server/bin/http-server -o"
   },
@@ -27,7 +27,7 @@
     "widgets"
   ],
   "repository": "",
-  "author": "Merkador",
+  "author": "SMCER",
   "license": "Envato REGULAR LICENSE",
   "dependencies": {
     "express": "~4.8.8",

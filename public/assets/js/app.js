@@ -1,8 +1,8 @@
 /** 
-  * declare 'Merkador' module with dependencies
+  * declare 'SMCER' module with dependencies
 */
 'use strict';
-angular.module("Merkador", [
+angular.module("SMCER", [
 	'ngAnimate',
 	'ngCookies',
 	'ngStorage',

@@ -1,6 +1,6 @@
 module.exports = {
     env : 'production',
-    db : process.env.OPENSHIFT_MONGODB_DB_URL + 'Merkador',
+    db : process.env.OPENSHIFT_MONGODB_DB_URL + 'SMCER',
     clientID : process.env.CLIENT_ID,
     clientSecret : process.env.CLIENT_SECRET,
     port : process.env.OPENSHIFT_NODEJS_PORT,

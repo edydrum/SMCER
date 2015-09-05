@@ -7,10 +7,10 @@ function ($rootScope) {
     return {
 
         events: {
-            toggle: "Merkador.toggle",
-            toggleByClass: "Merkador.toggleByClass",
-            togglerLinked: "Merkador.linked",
-            toggleableToggled: "Merkador.toggled"
+            toggle: "SMCER.toggle",
+            toggleByClass: "SMCER.toggleByClass",
+            togglerLinked: "SMCER.linked",
+            toggleableToggled: "SMCER.toggled"
         },
 
         commands: {

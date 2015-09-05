@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Merkador Main Controller
+ * SMCER Main Controller
  */
 app.controller('AppCtrl', ['$rootScope', '$scope', '$state', '$translate', '$localStorage', '$window', '$document', '$timeout', 'cfpLoadingBar','$http',
 function ($rootScope, $scope, $state, $translate, $localStorage, $window, $document, $timeout, cfpLoadingBar, $http) {

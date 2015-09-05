@@ -1,6 +1,6 @@
 
 // Validator Service for forms
-angular.module('merkadorApp').factory('ValidatorService', ["$state", "SweetAlert", function ($state, SweetAlert) {
+angular.module('SMCERApp').factory('ValidatorService', ["$state", "SweetAlert", function ($state, SweetAlert) {
 
     return {
         validateForm: function (form, show) {

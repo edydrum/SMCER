@@ -1,4 +1,4 @@
-angular.module('merkadorApp').factory('unauthorizedInterceptor', 
+angular.module('SMCERApp').factory('unauthorizedInterceptor', 
     function($location, $q) {
         var interceptor = {
             responseError : function(resposta) {

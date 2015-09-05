@@ -1,4 +1,4 @@
-var app = angular.module('merkadorApp', ['Merkador']);
+var app = angular.module('SMCERApp', ['SMCER']);
 app.run(['$rootScope', '$state', '$stateParams',
 function ($rootScope, $state, $stateParams) {
 
@@ -12,7 +12,7 @@ function ($rootScope, $state, $stateParams) {
     // GLOBAL APP SCOPE
     // set below basic information
     $rootScope.app = {
-        name: 'Merkador', // name of your project
+        name: 'SMCER', // name of your project
         author: 'Vinicius Carvalho', // author's name or company name
         description: 'Sistema para automação comercial multi plataforma, mobile friendly para micro e pequenos negócios', // brief description
         version: '1.0', // current version

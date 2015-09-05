@@ -41,7 +41,7 @@ function ($document, $rootScope) {
             var clearCb1 = angular.noop();
 
             if (shouldCloseOnOuterClicks) {
-                clearCb1 = $rootScope.$on('Merkador.toggled', function (e, id, active) {
+                clearCb1 = $rootScope.$on('SMCER.toggled', function (e, id, active) {
 
                     if (id == attrs.id) {
 

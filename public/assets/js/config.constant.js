@@ -28,8 +28,8 @@ app.constant('JS_REQUIRES', {
         'touchspin-plugin': ['vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js', 'vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css'],
 
         //*** Controllers
-        'authCtrl' : 'assets/js/controllers/merkador/authCtrl.js',
-        'userCtrl' : 'assets/js/controllers/merkador/userCtrl.js',
+        'authCtrl' : 'assets/js/controllers/SMCER/authCtrl.js',
+        'userCtrl' : 'assets/js/controllers/SMCER/userCtrl.js',
         'dashboardCtrl': 'assets/js/controllers/dashboardCtrl.js',
         'iconsCtrl': 'assets/js/controllers/iconsCtrl.js',
         'vAccordionCtrl': 'assets/js/controllers/vAccordionCtrl.js',
