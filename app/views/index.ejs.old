@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='pt-BR' ng-app='contatooh'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width'>
+        <!-- build:css css/index.min.css --> 
+        <link rel='stylesheet' href='vendor/bootstrap/dist/css/bootstrap.css'>
+        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap-theme.css">
+        <!-- endbuild -->
+        <title>Contatooh - Lista de Contatos</title>
+    </head>
+    <!-- <body ng-controller='ContatosController' -->
+    <body class='container'>
+        <%if (usuarioLogado.length > 0) { %>
+        <div class='text-right'>
+            <p>
+                Logado como: <span id='usuario-logado'><%=usuarioLogado %></span>
+                <a href='/logout'>Logout</a>
+            </p>
+        </div>
+        <% } %>
+        <div ng-view></div>
+        <!-- build:js css/index.min.js -->
+        <script src='vendor/angular/angular.js'></script>
+        <script src='vendor/angular-route/angular-route.js'></script>
+        <script src='vendor/angular-resource/angular-resource.js'></script>
+        <script src='js/main.js'></script>
+        <script src='js/controllers/ContatoService.js'></script>
+        <script src='js/controllers/AuthController.js'></script>
+        <script src='js/services/InterceptorService.js'></script>
+        <script src='js/controllers/ContatosController.js'></script>
+        <script src='js/controllers/ContatoController.js'></script>
+        <script src='js/directives/meus-componentes/meu-componente.js'></script>
+        <!-- endbuild -->
+    </body>
+</html>
