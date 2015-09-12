@@ -17,7 +17,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     // LAZY MODULES
 
     $ocLazyLoadProvider.config({
-        debug: false,
+        debug: true,
         events: true,
         modules: jsRequires.modules
     });

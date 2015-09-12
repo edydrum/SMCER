@@ -14,7 +14,7 @@ function ($rootScope, $state, $stateParams) {
     $rootScope.app = {
         name: 'SMCER', // name of your project
         author: 'Vinicius Carvalho', // author's name or company name
-        description: 'Sistema para automação comercial multi plataforma, mobile friendly para micro e pequenos negócios', // brief description
+        description: 'Sistema para Monitoramento do Consumo Elétrico Residêncial', // brief description
         version: '1.0', // current version
         year: ((new Date()).getFullYear()), // automatic current year (for copyright information)
         isMobile: (function () {// true if the browser is a mobile device
@@ -62,3 +62,18 @@ function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 
 }]);
+
+// Configure interceptor for redirect unauthorized access.
+angular.module('SMCER').factory('NoAccessInterceptor', 
+    function($location, $q) {
+        var interceptor = {
+            responseError : function(resposta) {
+                if (resposta.status == 401) {
+                    $location.path('/');
+                }
+                return $q.reject(resposta);
+            }
+        }
+        return interceptor;
+    }
+);
