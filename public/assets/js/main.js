@@ -62,18 +62,3 @@ function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 
 }]);
-
-// Configure interceptor for redirect unauthorized access.
-angular.module('SMCER').factory('NoAccessInterceptor', 
-    function($location, $q) {
-        var interceptor = {
-            responseError : function(resposta) {
-                if (resposta.status == 401) {
-                    $location.path('/');
-                }
-                return $q.reject(resposta);
-            }
-        }
-        return interceptor;
-    }
-);

@@ -1,4 +1,4 @@
-<div class="container-fluid container-fullw" ng-controller="consult">
+<div class="container-fluid container-fullw" ng-controller="userCtrlConsult">
 	<div class="row">
 		<div class="col-md-12">
 			<h5 class="over-title margin-bottom-15">Gerênciamento de <span class="text-bold">Usuários</span></h5>
@@ -11,7 +11,7 @@
                 </p>
             </div>
             <div class="col-xs-5 col-md-2">
-                    <a class="btn btn-wide btn-primary" href="#"><i class="glyphicon glyphicon-plus"></i> Adicionar</a>
+                    <a class="btn btn-wide btn-primary" ui-sref="app.manager.users_save"><i class="glyphicon glyphicon-plus"></i> Adicionar</a>
             </div>
             <br/>
 			<table class="table table-striped table-hover" id="sample-table-2" ng-table="tableParams" show-filter="true">
@@ -46,17 +46,17 @@
 								</button>
 								<ul class="dropdown-menu pull-right dropdown-light" role="menu">
 									<li>
-										<a href="#">
+										<a href="#" ng-href="#/app/manager/users/operation({{user._id}})">
 											Editar
 										</a>
-									</li>
+									</li> 
 									<li>
 										<a href="#">
 											Visualizar
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="#" ng-click='remove(user)'>
 											Remover
 										</a>
 									</li>

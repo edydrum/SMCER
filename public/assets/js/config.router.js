@@ -390,13 +390,22 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     })
     .state('app.manager.users', {
         url: '/users',
-        templateUrl: "assets/views/user/consult.html",
-        title: 'Elements',
+        templateUrl: "assets/views/users/consult.html",
+        title: 'Management of Users',
         icon: 'ti-layout-media-left-alt',
         ncyBreadcrumb: {
             label: 'Usuários'
         },
         resolve: loadSequence('ngTable', 'userCtrl')
+    })
+    .state('app.manager.users_save', {
+        url: '/save',
+        templateUrl: "assets/views/users/save.html",
+        title: 'Create or update User',
+        icon: 'ti-layout-media-left-alt',
+        ncyBreadcrumb: {
+            label: 'Save'
+        }
     });
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)

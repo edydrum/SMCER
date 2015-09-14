@@ -1,79 +1,71 @@
-// Resolve o problema de Query-Selectors
-var sanitize = require('mongo-sanitize');
-
-module.exports = function(app) {
-    
-    var User = app.models.user;
-    
+module.exports = function() {
     var controller = {};
+    
+    controller.list = function(req, res) {
+    	var user = new Object();
+    	user.users = users;
+        res.json(user);
+    };
+    
+    controller.get = function(req, res) {
+        var iduser = req.params.id;
+        var user = users.filter(function(user) {
+            return user.id == iduser;
+        })[0];
+        user ? res.json(user) : res.status(404).send('user not found');
+    };
+    
+    controller.delete = function(req, res) {
+        var iduser = req.params.id;
+        users = users.filter(function (user) {
+            return user.id != iduser;
+        });
+        res.status(204).end();
+    };
+    
+    var ID_FACTOR_INC = users.length;
+    
+    controller.save = function(req, res) {
 
-    controller.listUsers = function(req, res) {
-        User.find()
-        .select('name job picture created')
-        .exec().then(
-            function(contatos) {
-                res.json(contatos);
-            }, 
-            function(erro) {
-                console.error(erro);
-                res.status(500).json(erro);
-            }
-        );
+        var user = req.body;
+
+        var id = req.params.id;
+        if (id !== undefined) {
+            user.id = parseInt(id);
+        }       
+
+        user = user.id ? update(user) : add(user);
+        res.json(user);
     };
     
-    controller.getUser = function(req, res) {
-        var _id = sanitize(req.params.id);
-        User.findById(_id).exec()
-        .then(
-            function(user) {
-                if (!user) throw new Error("User not found");
-                res.json(contato);
-            },
-            function(erro) {
-                console.error(erro);
-                res.status(404).json(erro);
-            }
-        );
-    };
+    function add(userNew) { 
+        userNew.id = ++ID_FACTOR_INC;
+        users.push(userNew);
+        return userNew;
+    }
     
-    controller.deleteUser = function(req, res) {
-        var _id = sanitize(req.params.id);
-        console.log("Remove : "+_id);
-        User.remove({"_id" : _id}).exec()
-        .then(
-            function() {
-                res.send(204).end();
-            },
-            function(erro) {
-                return console.error(erro);
+    function update(userUpdate) {
+        users = users.map(function (user) {
+            if (user.id == userUpdate.id) {
+                var user = userUpdate;                
             }
-        );
-    };    
-    
-    controller.updateUser = function(req, res) {
-        var _id = sanitize(req.body._id);
-        
-        /*
-        // Evitando o Document Replace e inserção de dados em campos que não devem ser recebidos do cliente
-        var dados = {
-            "nome" : req.body.nome,
-            "email" : req.body.email,
-            "emergencia" : req.body.emergencia || null
-        } */
-        
-        //req.body.emergencia = req.body.emergencia || null;
-        
-        User.findByIdAndUpdate(_id, req.body).exec()
-        .then(
-            function(contato) {
-                res.json(contato);
-            },
-            function(erro) {
-                console.error(erro);
-                res.status(500).json(erro);
-            }
-        );
-    };
+            return user;
+        });
+        return userUpdate;
+    }
     
     return controller;
 };
+
+var users = [
+    {
+        id : ObjectId("557c9d8492f228c160106b52"),
+        login : "admin",
+        name : "Vinicius",
+        password : "teste",
+        type : "local",
+        created : ISODate("2015-06-13T21:15:35.984Z"),
+        picture : "app/img/user/02.jpg",
+        job : "Developer"
+    }
+];

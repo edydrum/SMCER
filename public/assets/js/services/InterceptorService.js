@@ -1,13 +1,26 @@
-angular.module('SMCERApp').factory('unauthorizedInterceptor', 
-    function($location, $q) {
-        var interceptor = {
-            responseError : function(resposta) {
-                if (resposta.status == 401) {
-                    $location.path('/login/signin');
+angular.module('SMCERApp').factory('httpInterceptor', ['$q','$location',function ($q,$location) {
+        return {
+            'response': function(response) {
+                if (response.status === 401) {
+                    $location.path('/');
+                    return $q.reject(response);
                 }
-                return $q.reject(resposta);
+                return response || $q.when(response);
+            },
+
+            'responseError': function(rejection) {
+
+                if (rejection.status === 401) {
+                    $location.path('/');
+                    return $q.reject(rejection);
+                }
+                return $q.reject(rejection);
             }
-        }
-        return interceptor;
+
+        };
     }
-);
+])
+//Http Intercpetor to check auth failures for xhr requests
+.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.interceptors.push('httpInterceptor');
+}]);
