@@ -1,24 +1,15 @@
-var mongoose = require('mongoose');
+var Sequelize = require('sequelize');
+var connection = new Sequelize('testenodejsmysql', 'root', 'root', {
+	host: 'localhost'
+	, port: 3306
+	, dialect: 'mysql'
+});
 
-module.exports = function(uri) {
-    mongoose.connect(uri, {server : {poolSize : 10}});
-    
-    mongoose.connection.on('connected', function() {
-        console.log('Mongoose! Conectado em: '+uri);
-    });
-    
-    mongoose.connection.on('disconnected', function() {
-        console.log('Mongoose! Desconectado de: '+uri);
-    });
-    
-    mongoose.connection.on('error', function(erro) {
-        console.log('Mongoose! Erro na conexão: '+erro);
-    });
-    
-    process.on('SIGINT', function() {
-        mongoose.connection.close(function() {
-            console.log("Mongoose! Encerrado");
-            process.exit(0);
-        });
-    });
-}
+connection.sync().then(function (success){
+	//console.log('conectou', success)
+
+}, function (error){
+	//console.log('ERRO DATABASE', error, connection)
+});
+
+module.exports = connection;
