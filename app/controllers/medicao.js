@@ -1,12 +1,11 @@
 module.exports =  function (app){ 
 
-	var ConsumoHoraFechada = app.models.consumoHoraFechada; 
+	var Medicao = app.models.medicao; 
 
 	var controller = {
-		getConsumoHoraFechada: function (req, resp){
-			ConsumoHoraFechada.findAll()
+		getMedicao: function (req, resp){
+			Medicao.findAll()
 			.then(function (success) {
-			  	console.log('success[0].dataValues', success[0].dataValues)
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){

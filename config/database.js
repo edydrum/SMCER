@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var connection = new Sequelize('testenodejsmysql', 'root', 'root', {
+var connection = new Sequelize('tcc', 'root', 'root', {
 	host: 'localhost'
 	, port: 3306
 	, dialect: 'mysql'

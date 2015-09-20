@@ -1,12 +1,11 @@
 module.exports =  function (app){ 
 
-	var ConsumoHistorico = app.models.consumoHistorico; 
+	var MediaHora = app.models.mediaHora; 
 
 	var controller = {
-		getConsumoHistorico: function (req, resp){
-			ConsumoHistorico.findAll()
+		getMediaHora: function (req, resp){
+			MediaHora.findAll()
 			.then(function (success) {
-			  	console.log('success[0].dataValues', success[0].dataValues)
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){

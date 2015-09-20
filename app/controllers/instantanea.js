@@ -1,12 +1,11 @@
 module.exports =  function (app){ 
 
-	var ConsumoHora = app.models.consumoHora; 
+	var Instantanea = app.models.instantanea; 
 
 	var controller = {
-		getConsumoHora: function (req, resp){
-			ConsumoHora.findAll()
+		getInstantanea: function (req, resp){
+			Instantanea.findAll()
 			.then(function (success) {
-			  	console.log('success[0].dataValues', success[0].dataValues)
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){

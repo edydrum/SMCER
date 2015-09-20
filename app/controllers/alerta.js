@@ -4,12 +4,9 @@ module.exports =  function (app){
 	var Alerta = app.models.alerta; 
 
 	var controller = {
-		 findAlertaById: function (req, resp){
-			Alerta.findAll({
-			  	where: {
-			    	idAlerta: req.body.idAlerta
-			  	}
-			}).then(function (success) {
+		 findAlerta: function (req, resp){
+			Alerta.findAll().
+			then(function (success) {
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){
@@ -17,22 +14,12 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		}, 
-		listAlertas: function (req, resp){
-			Alerta.findAll()
-			.then(function (success) {
-				resp.json(success);
-				resp.status(204).end();
-			}, function (error){
-				resp.status(500).end();
-				return console.error(error);
-			})
-		}, 
+
 		saveAlerta: function (req, resp){
 			var alerta = {
-				nomeAlerta: req.body.nome
-				, valorAlerta: req.body.valor
-				, taxaAlerta: req.body.taxa
-				, idUsuario: req.body.idUsuarioLogado
+				emailAlerta: req.body.email
+				, potencia: req.body.potencia
+				, habilitado: req.body.habilitado
 			};
 			Alerta.build(alerta)
 			.save()
@@ -44,17 +31,13 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		}, 
-		updateAlertaById: function (req, resp){
+		updateAlerta: function (req, resp){
 			var alerta = {
-				nomeAlerta: req.body.nome
-				, valorAlerta: req.body.valor
-				, taxaAlerta: req.body.taxa
-				, idUsuario: req.body.idUsuarioLogado
-			};			
+				potencia: req.body.potencia
+				, habilitado: req.body.habilitado
+			};		
 			Alerta.update( alerta, 
-				{ 
-					where:{ idAlerta: req.body.alerta.idAlerta } 
-				}
+				{ where: { emailAlerta: req.body.email } }
 			)
 			.then(function (success){
 				resp.json(success);
@@ -64,10 +47,8 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		},
-		deleteAlertaById: function (req, resp){
-			Alerta.destroy(
-				{ idAlerta: req.body.idAlerta }
-			)
+		deleteAlerta: function (req, resp){
+			Alerta.destroy( { emailAlerta: req.body.emailAlerta } )
 			.then(function (success){
 				resp.json(success);
 				resp.status(204).end();

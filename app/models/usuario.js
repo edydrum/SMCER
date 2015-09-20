@@ -1,4 +1,4 @@
-var connection = require('../../configs/database');
+var connection = require('../../config/database');
 var Sequelize = require('sequelize');
 
 module.exports = function() { 
@@ -11,9 +11,17 @@ module.exports = function() {
 			, primaryKey: true
 			, autoIncrement: true 
 		}, 
-		nomeUsuario: {
+		nome: {
 			type: Sequelize.STRING
-			, field: 'nome_usuario'
+			, field: 'nome'
+		},
+		senha: {
+			type: Sequelize.STRING
+			, field: 'senha'
+		},
+		email: {
+			type: Sequelize.STRING
+			, field: 'email'
 		}
 	}, 
 	{
