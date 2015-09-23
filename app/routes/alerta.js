@@ -4,6 +4,6 @@ module.exports = function(app){
 
 	app.get('/alerta', alertaController.findAlerta);
 	app.post('/alerta', alertaController.saveAlerta);
-	app.put('/alerta/', alertaController.updateAlerta);
-	app.delete('/alerta/', alertaController.deleteAlerta);
+	app.put('/alerta', alertaController.updateAlerta);
+	app.delete('/alerta/:email', alertaController.deleteAlerta);
 }

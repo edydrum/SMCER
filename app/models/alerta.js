@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 module.exports = function() { 
 
 	var Alerta = connection.define('alerta', {
-		emailAlerta: {
+		email: {
 			type: Sequelize.STRING
 			, field: 'email'
 			, unique: true
@@ -12,7 +12,7 @@ module.exports = function() {
 		}, 
 		potencia: {
 			type: Sequelize.INTEGER
-			, field: 'pontencia'
+			, field: 'potencia'
 		}, 
 		habilitado: {
 			type: Sequelize.BOOLEAN 

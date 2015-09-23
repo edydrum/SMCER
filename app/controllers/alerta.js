@@ -5,7 +5,7 @@ module.exports =  function (app){
 
 	var controller = {
 		 findAlerta: function (req, resp){
-			Alerta.findAll().
+			Alerta.findOne().
 			then(function (success) {
 				resp.json(success);
 				resp.status(204).end();
@@ -17,7 +17,7 @@ module.exports =  function (app){
 
 		saveAlerta: function (req, resp){
 			var alerta = {
-				emailAlerta: req.body.email
+				email: req.body.email
 				, potencia: req.body.potencia
 				, habilitado: req.body.habilitado
 			};
@@ -37,7 +37,7 @@ module.exports =  function (app){
 				, habilitado: req.body.habilitado
 			};		
 			Alerta.update( alerta, 
-				{ where: { emailAlerta: req.body.email } }
+				{ where: { email: req.body.email } }
 			)
 			.then(function (success){
 				resp.json(success);
@@ -48,7 +48,9 @@ module.exports =  function (app){
 			})
 		},
 		deleteAlerta: function (req, resp){
-			Alerta.destroy( { emailAlerta: req.body.emailAlerta } )
+			Alerta.destroy( { where: 
+				{ email: req.params.email } 
+			} )
 			.then(function (success){
 				resp.json(success);
 				resp.status(204).end();
