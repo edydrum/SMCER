@@ -4,9 +4,9 @@ var Sequelize = require('sequelize');
 module.exports = function() { 
 
 	var Medicao = connection.define('medicao', {
-		idCircuito: {
+		id: {
 			type: Sequelize.INTEGER
-			, field: 'id_circuito'
+			, field: 'id'
 			, primaryKey: true
 		}, 
 		dia: {

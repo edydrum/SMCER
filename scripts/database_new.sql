@@ -32,6 +32,7 @@ PRIMARY KEY (`id`)
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` VALUES (1,'admin','admin', 'grupoedersonegcna7@gmail.com');
+INSERT INTO `usuario` VALUES (2,'teste','teste', 'teste@gmail.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 

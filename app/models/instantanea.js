@@ -4,9 +4,9 @@ var Sequelize = require('sequelize');
 module.exports = function() { 
 
 	var Instantanea = connection.define('instantanea', {
-		idCircuito: {
+		id: {
 			type: Sequelize.INTEGER
-			, field: 'id_circuito'
+			, field: 'id'
 			, unique: true
 			, primaryKey: true
 		}, 

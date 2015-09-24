@@ -18,21 +18,19 @@
                 <thead>
 					<tr>
                         <th>Foto</th>
-						<th class="sortable" ng-class="{'sort-asc': tableParams.isSortBy('name', 'asc'),
-                    'sort-desc': tableParams.isSortBy('name', 'desc')}"
-                            ng-click="tableParams.sorting({'name' : tableParams.isSortBy('name', 'asc') ? 'desc' : 'asc'})">
+						<th class="sortable" ng-class="{'sort-asc': tableParams.isSortBy('nome', 'asc'),
+                    'sort-desc': tableParams.isSortBy('nome', 'desc')}"
+                            ng-click="tableParams.sorting({'nome' : tableParams.isSortBy('nome', 'asc') ? 'desc' : 'asc'})">
                             <span class='sort-indicator'>Nome</span></th>
-						<th class="hidden-xs">Cargo</th>
-						<th class="hidden-xs">Data de Criação</th>
+						<th class="hidden-xs">Email</th>
                         <th>Opções</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in $data | filter: filtro">
 						<td data-title="'Foto'" class="center"><img src="assets/images/avatar-1.jpg" class="img-rounded" alt="image"/></td>
-						<td>{{user.name}}</td> 
-						<td class="hidden-xs">{{user.job}}</td>
-						<td class="hidden-xs">{{user.created}}</td>
+						<td>{{user.nome}}</td> 
+						<td class="hidden-xs">{{user.email}}</td>
 						<td class="center">
 						<div class="visible-md visible-lg hidden-sm hidden-xs">
 							<a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Editar"><i class="fa fa-pencil"></i></a>
