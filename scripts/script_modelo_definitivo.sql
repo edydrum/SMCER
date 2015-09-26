@@ -17,6 +17,7 @@ CREATE TABLE tcc_teste.Alerta (
   id_circuito_fk INTEGER UNSIGNED NOT NULL,
   id_usuario_fk INTEGER UNSIGNED NOT NULL,
   potencia FLOAT NOT NULL,
+  habilitar TINYINT NOT NULL,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   INDEX Alerta_FK_Usuario(id_usuario_fk),
