@@ -1,6 +1,6 @@
 // Resource of User
 angular.module('SMCERApp').factory('User', function($resource) {
-    return $resource('/users/:id', null, {
+    return $resource('/usuarios/:id', null, {
         'login' : {method : 'POST'}
     });
 });

@@ -32,7 +32,8 @@ module.exports = function() {
         {
             secret: 'palavra secreta',
             resave: true,
-            saveUninitialized: true
+            saveUninitialized: true,
+            cookie: { maxAge : 3600000 }
         }
     ));
     

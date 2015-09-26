@@ -4,9 +4,9 @@ var Sequelize = require('sequelize');
 module.exports = function() { 
 		
 	var Usuario = connection.define('usuario', {
-		idUsuario: {
+		id: {
 			type: Sequelize.INTEGER
-			, field: 'id_usuario'
+			, field: 'id'
 			, unique: true
 			, primaryKey: true
 			, autoIncrement: true 

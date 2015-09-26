@@ -1,6 +1,0 @@
-export NODE_ENV=development
-export SELENIUM_USER=vinicius91carvalho
-export SELENIUM_USER_PASSWORD=a1s2d3z4
-export CLIENT_ID=5d73e9739607d19c9ddc
-export CLIENT_SECRET=542bdd2d1de68a782fd912e46c9c274b7fbe4ee5
-nodemon server.js

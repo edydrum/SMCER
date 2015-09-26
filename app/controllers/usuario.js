@@ -1,9 +1,23 @@
 
-module.exports =  function (app){ 
+module.exports = function (app){ 
 	
 	var Usuario = app.models.usuario;
 
 	var controller = {
+		getAll: function (req, resp){
+			Usuario.findAll()
+			.then(function (success) {
+				var returN = success;
+				if( !(Object.prototype.toString.call(success) === '[object Array]') ) {
+					returN = new Array();
+					returN.push(success);
+				}
+				resp.json(returN);
+			}, function (error){
+				resp.status(500).end();
+				return console.error(error);
+			})
+		},
 		getUsuario: function (req, resp){
 			Usuario.findOne( { where: { email: req.body.email } })
 			.then(function (success){

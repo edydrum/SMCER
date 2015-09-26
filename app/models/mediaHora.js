@@ -4,9 +4,9 @@ var Sequelize = require('sequelize');
 module.exports = function() { 
 
 	var MediaHora = connection.define('media_hora', {
-		idCircuito: {
+		id: {
 			type: Sequelize.INTEGER
-			, field: 'id_circuito'
+			, field: 'id'
 			, unique: true
 			, primaryKey: true
 		}, 

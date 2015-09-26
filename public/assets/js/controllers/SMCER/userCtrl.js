@@ -49,7 +49,7 @@ app.controller('userCtrlSave', ["$scope", "User", function ($scope, User) {
             
             if ($scope.idUpdate == undefined) {
                 
-                User.login($scope.user,
+                User.save($scope.user,
                 function user(user) {
                     console.log("User retornado: "+user);
                     $rootScope.user = user;
