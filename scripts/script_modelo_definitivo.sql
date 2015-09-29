@@ -28,7 +28,7 @@ CREATE TABLE tcc_teste.Consumo_Hora (
   data_hora TIMESTAMP NOT NULL,
   id_circuito_fk INTEGER UNSIGNED NOT NULL,
   potencia FLOAT NOT NULL DEFAULT 0.0,
-  PRIMARY KEY(timestamp, id_circuito_fk),
+  PRIMARY KEY(data_hora, id_circuito_fk),
   INDEX Consumo_Hora_FK_Circuito(id_circuito_fk)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -36,7 +36,7 @@ CREATE TABLE tcc_teste.Consumo_Hora_Fechada (
   data_hora TIMESTAMP NOT NULL,
   id_circuito_fk INTEGER UNSIGNED NOT NULL,
   potencia FLOAT NOT NULL DEFAULT 0.0,
-  PRIMARY KEY(timestamp, id_circuito_fk),
+  PRIMARY KEY(data_hora, id_circuito_fk),
   INDEX Consumo_Hora_Fechada_FK_Circuito(id_circuito_fk)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -44,7 +44,7 @@ CREATE TABLE tcc_teste.Consumo_Instantaneo (
   hora TIME NOT NULL,
   id_circuito_fk INTEGER UNSIGNED NOT NULL,
   potencia FLOAT NOT NULL DEFAULT 0.0,
-  PRIMARY KEY(time, id_circuito_fk),
+  PRIMARY KEY(hora, id_circuito_fk),
   INDEX Consumo_Instantaneo_FK_Circuito(id_circuito_fk)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
