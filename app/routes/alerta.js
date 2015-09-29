@@ -1,9 +1,13 @@
 module.exports = function(app){
 
- 	var alertaController = app.controllers.alerta;
+ 	var alerta = app.controllers.alerta;
 
-	app.get('/alerta', alertaController.findAlerta);
-	app.post('/alerta', alertaController.saveAlerta);
-	app.put('/alerta', alertaController.updateAlerta);
-	app.delete('/alerta/:email', alertaController.deleteAlerta);
+ 	app.route('/alertas')
+		.get(alerta.getAll)
+		.post(alerta.saveAlerta);
+
+	app.route('/alertas/:id')
+		.get(alerta.getAlerta)
+		.put(alerta.updateAlerta)
+		.delete(alerta.deleteAlerta);
 }

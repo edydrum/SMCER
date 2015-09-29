@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 
 module.exports = function() { 
 		
-	var Usuario = connection.define('usuario', {
+	var Usuario = connection.define('Usuario', {
 		id: {
 			type: Sequelize.INTEGER
 			, field: 'id'
@@ -25,7 +25,7 @@ module.exports = function() {
 		}
 	}, 
 	{
-    	tableName: 'usuario'
+    	tableName: 'Usuario'
 		, timestamps: false		
 	});
 

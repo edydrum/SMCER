@@ -9,13 +9,13 @@ function verificaAutenticacao(req, res, next) {
 
 module.exports = function(app){
 
- 	var controller = app.controllers.usuario;
+ 	var usuario = app.controllers.usuario;
 
 	 app.route('/usuarios')
-        .get(verificaAutenticacao, controller.getAll)
-        .post(verificaAutenticacao, controller.saveUsuario)
+        .get(verificaAutenticacao, usuario.getAll)
+        .post(verificaAutenticacao, usuario.saveUsuario)
     app.route('/usuarios/:id')
-        .get(verificaAutenticacao, controller.getUsuario)
-        //.delete(verificaAutenticacao, controller.deleteUser)
-        .put(verificaAutenticacao, controller.updateUsuario);
+        .get(verificaAutenticacao, usuario.getUsuario)
+        .put(verificaAutenticacao, usuario.updateUsuario)
+        .delete(verificaAutenticacao, usuario.deleteUsuario);
 }

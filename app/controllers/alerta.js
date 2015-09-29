@@ -2,11 +2,37 @@
 module.exports =  function (app){ 
 
 	var Alerta = app.models.alerta; 
+	var Usuario = app.models.usuario; 
+	var Circuito = app.models.circuito; 
 
 	var controller = {
-		 findAlerta: function (req, resp){
-			Alerta.findOne().
-			then(function (success) {
+		 getAll: function (req, resp){
+			var _id = req.params.idUser;
+			Alerta.findAll( 
+				{ 	
+					include: [{
+						model: Usuario
+						, where: { idUsuario: _id }
+					}, 
+					{ model: Circuito }]
+				}
+			)
+			.then(function (success) {
+				var returN = success;
+				if( !(Object.prototype.toString.call(success) === '[object Array]') ) {
+					returN = new Array();
+					returN.push(success);
+				}
+				resp.json(returN);
+				resp.status(204).end();
+			}, function (error){
+				resp.status(500).end();
+				return console.error(error);
+			})
+		}, 		
+		getAlerta: function (req, resp){
+			Alerta.findOne( { where: { id: req.params.id } } )
+			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){
@@ -14,14 +40,15 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		}, 
-
 		saveAlerta: function (req, resp){
 			var alerta = {
-				email: req.body.email
-				, potencia: req.body.potencia
-				, habilitado: req.body.habilitado
+				potencia: req.body.alerta.potencia
+				, habilitado: req.body.alerta.habilitado
+				, name: req.body.alerta.name
+				, idCircuito: req.body.circuito.idCircuito
+				, idUsuario: req.body.usuario.idUsuario
 			};
-			Alerta.build(alerta)
+			Alerta.build( alerta )
 			.save()
 			.then(function (success){
 				resp.json(success);
@@ -33,12 +60,13 @@ module.exports =  function (app){
 		}, 
 		updateAlerta: function (req, resp){
 			var alerta = {
-				potencia: req.body.potencia
-				, habilitado: req.body.habilitado
-			};		
-			Alerta.update( alerta, 
-				{ where: { email: req.body.email } }
-			)
+				potencia: req.body.alerta.potencia
+				, habilitado: req.body.alerta.habilitado
+				, name: req.body.alerta.name
+				, idCircuito: req.body.circuito.idCircuito
+				, idUsuario: req.body.usuario.idUsuario
+			};	
+			Alerta.update( alerta, { where: { id: req.params.id } } )
 			.then(function (success){
 				resp.json(success);
 				resp.status(204).end();
@@ -49,7 +77,7 @@ module.exports =  function (app){
 		},
 		deleteAlerta: function (req, resp){
 			Alerta.destroy( { where: 
-				{ email: req.params.email } 
+				{ id: req.params.id } 
 			} )
 			.then(function (success){
 				resp.json(success);

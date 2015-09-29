@@ -13,15 +13,17 @@ module.exports = function (app){
 					returN.push(success);
 				}
 				resp.json(returN);
+				resp.status(204).end();				
 			}, function (error){
 				resp.status(500).end();
 				return console.error(error);
 			})
 		},
 		getUsuario: function (req, resp){
-			Usuario.findOne( { where: { email: req.body.email } })
+			Usuario.findOne( { where: { id: req.params.id } } )
 			.then(function (success){
 				resp.json(sucess);
+				resp.status(204).end();				
 			}, function (error){
 				resp.status(500).end();
 				return console.error(error);
@@ -55,7 +57,19 @@ module.exports = function (app){
 				resp.status(500).end();
 				return console.error(error);
 			})
-		}
+		},
+		deleteUsuario: function (req, resp){
+			Usuario.destroy( { where: 
+				{ id: req.params.id } 
+			} )
+			.then(function (success){
+				resp.json(success);
+				resp.status(204).end();
+			}, function (error){
+				resp.status(500).end();
+				return console.error(error);
+			})
+		}		
 	};
 	return controller;
 }
