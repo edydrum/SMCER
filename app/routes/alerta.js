@@ -8,6 +8,6 @@ module.exports = function(app){
 
 	app.route('/alertas/:id')
 		.get(alerta.getAlerta)
-		.put(alerta.updateAlerta)
+		.post(alerta.updateAlerta)
 		.delete(alerta.deleteAlerta);
 }

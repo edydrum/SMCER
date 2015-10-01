@@ -1,8 +1,6 @@
 // Resource of User
 angular.module('SMCERApp').factory('User', function($resource) {
-    return $resource('/usuarios/:id', null, {
-        'login' : {method : 'POST'}
-    });
+    return $resource('/usuarios/:id', {id: '@id'}, {} );
 });
 
 // Resource of Login
@@ -14,28 +12,10 @@ angular.module('SMCERApp').factory('Auth', function($resource) {
 
 // Resource of Alerts
 angular.module('SMCERApp').factory('Alert', function($resource) {
-    return $resource('/alertas', { 
-    	'getAll': { method: 'GET', params: {id: '@id'} }
-    });
-});
-
-// Resource of Alerts
-angular.module('SMCERApp').factory('AlertRemove', function($resource) {
-    return $resource('/alertas/:id', {id: '@id'}, { 
-    	'removeAlert': { method: 'DELETE' }
-    });
-});
-
-// Resource of Alerts
-angular.module('SMCERApp').factory('AlertSave', function($resource) {
-    return $resource('/alertas', { 
-    	'saveAlert': { method: 'POST', params: {data: '@data'} }
-    });
+    return $resource('/alertas/:id', {id: '@id'}, {} );
 });
 
 // Resource of Circuito
 angular.module('SMCERApp').factory('Circuito', function($resource) {
-    return $resource('/circuitos', { 
-    	'getAll': { method: 'GET' }
-    });
+    return $resource('/circuitos', {}, {} );
 });

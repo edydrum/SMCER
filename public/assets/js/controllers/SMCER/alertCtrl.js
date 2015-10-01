@@ -3,8 +3,8 @@
  * Controller for Manager Alert
  * Simple table with sorting and filtering on AngularJS
  */
-app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", "ngTableParams", "Alert", "AlertRemove",
-    function ($scope, $filter, $rootScope, $state, ngTableParams, Alert, AlertRemove) {    
+app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", "ngTableParams", "Alert",
+    function ($scope, $filter, $rootScope, $state, ngTableParams, Alert) {    
     
     $scope.filtro = '';
     
@@ -15,17 +15,20 @@ app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", 
     $scope.init();
 
     $scope.removeAlert = function(id) {
-        console.log('removeAlert', id)
-        AlertRemove.delete( { id: id },  
+        Alert.delete( { id: id },  
             function(alerts) {
                 $scope.alerts.splice(id, 1);
-                $scope.tableParams = createTable($scope.alerts);
             }, 
             function(erro) {
                 console.log(erro);                               
             }
         );
     };
+
+    $scope.editAlert = function(alert){
+        $rootScope.alertEdit = alert
+        redirectApp()
+    }
     
     function searchAlerts() {
         Alert.query( { id: 1 },  
@@ -57,18 +60,25 @@ app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", 
     };
 
     function redirectApp() {
-        $state.go('app.manager.alerts');
+        $state.go('app.manager.alerts_save');
     }
     
 }]);
 
-app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "AlertSave", "Circuito", "ValidatorService", "SweetAlert",
-  function ($scope, $rootScope, $state, AlertSave, Circuito, ValidatorService, SweetAlert) {
+app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "Alert", "Circuito", "ValidatorService", "SweetAlert",
+  function ($scope, $rootScope, $state, Alert, Circuito, ValidatorService, SweetAlert) {
     
     $scope.alert = {};
+    $scope.update = false;
+
+    console.log('init alertCtrlSave', $rootScope.alertEdit)
 
     $scope.init = function(){
         searchCircuitos();
+        if ($rootScope.alertEdit){ 
+            $scope.alert = $rootScope.alertEdit;
+            $scope.update = true;
+        }
     }
 
     $scope.init();
@@ -76,52 +86,70 @@ app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "AlertSave", 
     function searchCircuitos() {
         Circuito.query(   
             function(circuitos) {
-                console.log('SERACHCIRCUITOS', circuitos);
                 $scope.circuitos = circuitos;
-                if ($scope.idUpdate == undefined) {
-                    $scope.alert.circuito = circuitos[0];
+                $scope.alert.circuito = circuitos[0];
+                if ($scope.update) {
+                    $scope.alert.circuito.id = $rootScope.alertEdit.idCircuito;
+                    delete $rootScope.alertEdit
                 }
             }, 
             function(erro) {
                 console.log(erro);                               
             }
         );
-    };    
+    };  
+
+    function loadData(){
+        var data = {
+            alerta: $scope.alert
+            , circuito: {
+                idCircuito: $scope.alert.circuito.id
+            }, usuario: {
+                idUsuario:  $rootScope.user.id
+            }
+        };
+        return data;
+    }; 
+
+    function saveAlert() {
+        var data = loadData();
+        Alert.save(data,
+            function alert(alert) {
+                console.log("Alert retornado", alert);
+                $scope.alert = {};
+                redirectApp();
+            },
+            function (erro) {
+                console.log(erro);
+                SweetAlert.swal("Dados incorretos", "Verifique os dados digitados", "error");
+            }
+        );
+    };
+
+    function editAlert() {
+        var id = $scope.alert.id;
+        var data = loadData();
+        Alert.save({id}, data,
+            function alert(alert) {
+                //console.log("Alert retornado", alert);
+                $scope.alert = {};
+                redirectApp();
+            },
+            function (erro) {
+                console.log(erro);
+                SweetAlert.swal("Dados incorretos", "Verifique os dados digitados", "error");
+            }
+        );
+    };
 
     $scope.save = function (Form) {
-        console.log("FORM", Form)
-
         if (ValidatorService.validateForm(Form, false)) {
-            if ($scope.idUpdate == undefined) {
-                console.log('alertScope', $scope.alert)
-                var circuito = {
-                    idCircuito: 1
-                }
-                var usuario = {
-                    idUsuario: 1
-                }
-                var data = {
-                    alerta: $scope.alert
-                    , circuito: circuito
-                    , usuario: usuario
-                };
-                console.log('data', data)
-                AlertSave.save(data,
-                    function alert(alert) {
-                        console.log("Alert retornado: " + alert);
-                        $rootScope.alert = alert;
-                        $scope.alert = {};
-                        redirectApp();
-                    },
-                    function (erro) {
-                        console.log(erro);
-                        SweetAlert.swal("Dados incorretos", "Verifique os dados digitados", "error");
-                    }
-                );
+            if (!$scope.update) {
+                saveAlert();
+            }else{
+                editAlert()
             }            
-
         }
-
     };
     
     function redirectApp() {

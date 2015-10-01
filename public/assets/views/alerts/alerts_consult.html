@@ -33,13 +33,15 @@
 						<td>{{alert.nome}}</td> 
 						<td class="hidden-xs">{{alert.potencia}}</td>
 						<td class="hidden-xs">{{alert.circuito}}</td>
-						<td class="hidden-xs center">
-							<input type="checkbox" ng-model="alert.habilitado" />
+						<td class="hidden-xs">
+							<div class="checkbox clip-check check-primary checkbox-table">
+								<input disabled type="checkbox" id="habilitado" value="1" ng-model="alert.habilitado">
+								<label for="habilitado"></label>
+							</div>							
 						</td>
 						<td class="left">
 						<div class="visible-md visible-lg hidden-sm hidden-xs">
-							<a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Editar" ng-href="#/app/manager/alertSave({{alert.id}})"><i class="fa fa-pencil"></i></a>
-							<a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Visualizar"><i class="fa fa-share"></i></a>
+							<a href="#" class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Editar" ng-click="editAlert(alert)"><i class="fa fa-pencil"></i></a>
 							<a href="#" class="btn btn-transparent btn-xs tooltips" tooltip-placement="top" tooltip="Remover" ng-click='removeAlert(alert.id)'><i class="fa fa-times fa fa-white"></i></a>
 						</div>
 						<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -53,11 +55,6 @@
 											Editar
 										</a>
 									</li> 
-									<li>
-										<a href="#">
-											Visualizar
-										</a>
-									</li>
 									<li>
 										<a href="#" >
 											Remover
