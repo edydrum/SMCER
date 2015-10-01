@@ -4,6 +4,14 @@ CREATE TABLE tcc_teste.Circuito (
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO Circuito VALUES (null, 'Banheiro');
+INSERT INTO Circuito VALUES (null, 'Cozinha');
+INSERT INTO Circuito VALUES (null, 'Chuveiro');
+INSERT INTO Circuito VALUES (null, 'Porao');
+INSERT INTO Circuito VALUES (null, 'FASE 1');
+INSERT INTO Circuito VALUES (null, 'FASE 2');
+
+
 CREATE TABLE tcc_teste.Usuario (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   nome CHAR(255) NOT NULL,
@@ -11,6 +19,8 @@ CREATE TABLE tcc_teste.Usuario (
   senha  CHAR(64) NOT NULL,
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO Usuario VALUES (null, 'admin','admin@gmail.com','admin');
 
 CREATE TABLE tcc_teste.Alerta (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,

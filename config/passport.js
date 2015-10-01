@@ -38,29 +38,21 @@ module.exports = function() {
 
         User.findOne( { where: { nome: login, senha : password } })
         .then(function (success){
-              console.log('Usuário autenticado com sucesso!');
-              return done(null, success);
+          console.log('Usuário autenticado com sucesso!');
+          return done(null, success);
         }, function (error){
             console.error("Erro no login: "+error);
-                return done(error);
+            return done(error);
         });
 
     }));
     
-    passport.serializeUser(function(User, done) {
-        done(null, User.id);
+    passport.serializeUser(function(user, done) {
+        done(null, user);
     });
     
-    passport.deserializeUser(function(id, done) {
-        console.log("@@@@ passport.deserializeUser");
-        User.findOne( { where: { "id" : id} })
-        .then(function (success){
-               done(null, User);
-        }, function (error){
-            return done(error);
-        });
-
-
+    passport.deserializeUser(function(user, done) {
+        done(null, user);
     });
     
 };

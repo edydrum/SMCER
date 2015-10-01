@@ -27,9 +27,9 @@ function ($rootScope, $state, $stateParams) {
         layout: {
             isNavbarFixed: true, //true if you want to initialize the template with fixed header
             isSidebarFixed: false, // true if you want to initialize the template with fixed sidebar
-            isSidebarClosed: true, // true if you want to initialize the template with closed sidebar
+            isSidebarClosed: false, // true if you want to initialize the template with closed sidebar
             isFooterFixed: false, // true if you want to initialize the template with fixed footer
-            theme: 'theme-4', // indicate the theme chosen for your project
+            theme: 'theme-3', // indicate the theme chosen for your project
             logo: 'assets/images/logo.png', // relative path of the project logo
         }
     };

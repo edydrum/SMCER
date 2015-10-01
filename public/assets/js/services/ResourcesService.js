@@ -17,5 +17,5 @@ angular.module('SMCERApp').factory('Alert', function($resource) {
 
 // Resource of Circuito
 angular.module('SMCERApp').factory('Circuito', function($resource) {
-    return $resource('/circuitos', {}, {} );
+    return $resource('/circuitos', {} );
 });
