@@ -144,7 +144,6 @@ app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "Alert", "Cir
 
     $scope.save = function (Form) {
         if (ValidatorService.validateForm(Form, false)) {
-<<<<<<< HEAD
             if (!$scope.update) {
                 saveAlert();
             }else{
