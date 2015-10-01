@@ -7,7 +7,7 @@ module.exports = function(app){
 		.post(circuito.saveCircuito);
 
 	app.route('/circuitos/:id')
-		.get(circuito.findOneCircuito)
+		.get(circuito.getCircuito)
 		.put(circuito.updateCircuito)
 		.delete(circuito.deleteCircuito);
 }

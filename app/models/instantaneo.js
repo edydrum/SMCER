@@ -3,11 +3,11 @@ var Sequelize = require('sequelize');
 
 module.exports = function() { 
 
-	var Circuito, Instantanea;
+	var Circuito, Instantaneo;
 
 	Circuito = connection.import(__dirname + '/circuito');
 
-	Instantanea = connection.define('Consumo_Instantaneo', {
+	Instantaneo = connection.define('consumoInstantaneo', {
 		hora: {
 			type: Sequelize.DATE
 			, field: 'hora'
@@ -16,15 +16,6 @@ module.exports = function() {
 		potencia: {
 			type: Sequelize.FLOAT
 			, field: 'potencia'
-		},
-		idCircuito: {
-			type: Sequelize.INTEGER
-			, field: 'id_circuito_fk'
-			, primaryKey: true
-			, references: {
-				model: 'Circuito'
-				, key: 'id'
-			}
 		}
 	}, 
 	{ 
@@ -32,8 +23,20 @@ module.exports = function() {
 		, timestamps: false		
 	});
 
-	Circuito.hasMany(Instantanea, {foreignKey:'idCircuito'} );
-	Instantanea.belongsTo(Circuito, {foreignKey:'idCircuito'} );		
+	Circuito.hasMany(Instantaneo, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk' 
+			, primaryKey: true
+		} 
+	});
+	Instantaneo.belongsTo(Circuito, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk'
+			, primaryKey: true 
+		} 
+	});	
 
-	return Instantanea;
+	return Instantaneo;
 }

@@ -1,0 +1,55 @@
+<div class="container-fluid container-fullw" ng-controller="alertCtrlSave">
+	<div class="row">
+		<div class="col-md-12">
+			<h5 class="over-title margin-bottom-15">Cadastro de <span class="text-bold">Alertas</span></h5>
+            <p>
+            Aqui é possível você gerênciar os Alertas existentes. É fácil cadastrá-los, editá-los ou removê-los.
+            </p>
+            <div class="panel panel-transparent">
+				<div class="panel-body">
+					<form name="formAlert" role="form" ng-submit='save(formAlert)' novalidate id="formAlertSave">
+						<div class="row">	
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="nome">
+										Nome
+									</label>
+									<input type="text" class="form-control underline" id="nome" ng-model="alert.nome">
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										Potência
+									</label>
+									<input type="number" class="form-control underline" id="potencia" ng-model="alert.potencia">
+								</div>
+							</div>	
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>
+										Circuito
+									</label>
+									<select class="cs-select cs-skin-elastic" name="circuito" id="circuito" ng-options="circuito.nome for circuito in circuitos track by circuito.id" 
+									ng-model="alert.circuito"></select>
+								</div>
+
+								<div class="form-group">
+									<div class="checkbox clip-check check-primary">
+										<input type="checkbox" id="habilitado" value="1" ng-model="alert.habilitado">
+										<label for="habilitado">
+											Habilitado
+										</label>
+									</div>
+								</div>
+							</div>	
+						</div>	
+						<div class="row">							
+							<div class="form-group">
+								<button type="submit" class="btn btn-wide btn-primary">Salvar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

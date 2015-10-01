@@ -388,6 +388,25 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
             label: 'Gerenciamento'
         }
     })
+    .state('app.manager.alerts', {
+        url: '/alerts',
+        templateUrl: "assets/views/alerts/alerts_consult.html",
+        title: 'Management of Alerts',
+        icon: 'ti-layout-media-left-alt',
+        ncyBreadcrumb: {
+            label: 'Alertas'
+        },
+        resolve: loadSequence('ngTable', 'alertCtrl')
+    })
+    .state('app.manager.alerts_save', {
+        url: '/alertSave',
+        templateUrl: "assets/views/alerts/alerts_save.html",
+        title: 'Create or update Alertas',
+        icon: 'ti-layout-media-left-alt',
+        ncyBreadcrumb: {
+            label: 'Save'
+        }
+    })
     .state('app.manager.users', {
         url: '/users',
         templateUrl: "assets/views/users/consult.html",
@@ -406,7 +425,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         ncyBreadcrumb: {
             label: 'Save'
         }
-    });
+    })
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
     function loadSequence() {

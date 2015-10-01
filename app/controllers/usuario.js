@@ -50,7 +50,7 @@ module.exports = function (app){
 				, senha: req.body.senha
 				, email: req.body.email
 			};
-			Usuario.update(usuario, { where: { idUsuario: req.body.id } } )
+			Usuario.update(usuario, { where: { id: req.params.id } } )
 			.then(function (success){
 				resp.status(204).end();
 			}, function (error){
@@ -59,9 +59,7 @@ module.exports = function (app){
 			})
 		},
 		deleteUsuario: function (req, resp){
-			Usuario.destroy( { where: 
-				{ id: req.params.id } 
-			} )
+			Usuario.destroy( { where: { id: req.params.id } } )
 			.then(function (success){
 				resp.json(success);
 				resp.status(204).end();

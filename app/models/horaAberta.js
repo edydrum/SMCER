@@ -7,7 +7,7 @@ module.exports = function() {
 
 	Circuito = connection.import(__dirname + '/circuito');
 
-	HoraAberta = connection.define('Consumo_Hora', {
+	HoraAberta = connection.define('consumoHora', {
 		dataHora: {
 			type: Sequelize.DATE
 			, field: 'data_hora'
@@ -16,24 +16,27 @@ module.exports = function() {
 		potencia: {
 			type: Sequelize.FLOAT
 			, field: 'potencia'
-		},
-		idCircuito: {
-			type: Sequelize.INTEGER
-			, field: 'id_circuito_fk'
-			, primaryKey: true
-			, references: {
-				model: 'Circuito'
-				, key: 'id'
-			}
 		}		
-	},  
+	},	  
 	{ 
 		tableName: 'Consumo_Hora'
 		, timestamps: false		
 	});
 
-	Circuito.hasMany(HoraAberta, {foreignKey:'idCircuito'} );
-	HoraAberta.belongsTo(Circuito, {foreignKey:'idCircuito'} );
+	Circuito.hasMany(HoraAberta, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk' 
+			, primaryKey: true
+		} 
+	});
+	HoraAberta.belongsTo(Circuito, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk' 
+			, primaryKey: true
+		} 
+	});
 
 	return HoraAberta;
 }

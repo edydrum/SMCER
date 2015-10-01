@@ -8,7 +8,7 @@ module.exports = function() {
 	Usuario = connection.import(__dirname + '/usuario');
 	Circuito = connection.import(__dirname + '/circuito');
 
-	Alerta = connection.define('Alerta', {
+	Alerta = connection.define('alerta', {
 		id: {
 			type: Sequelize.INTEGER
 			, field: 'id'
@@ -27,22 +27,6 @@ module.exports = function() {
 		habilitado: {
 			type: Sequelize.BOOLEAN 
 			, field: 'habilitar'
-		},
-		idUsuario: {
-			type: Sequelize.INTEGER
-			, field: 'id_usuario_fk'
-			, references: {
-				model: 'Usuario'
-				, key: 'id'
-			}
-		},
-		idCircuito: {
-			type: Sequelize.INTEGER
-			, field: 'id_circuito_fk'
-			, references: {
-				model: 'Circuito'
-				, key: 'id'
-			}
 		}					
 	}, 
 	{ 
@@ -50,11 +34,31 @@ module.exports = function() {
 		, timestamps: false		
 	});
 
-	Usuario.hasMany(Alerta, { foreignKey: 'idUsuario' } );
-	Alerta.belongsTo(Usuario, { foreignKey: 'idUsuario' } );	
+	Usuario.hasMany(Alerta, { 
+		foreignKey: { 
+			name: 'idUsuario'
+			, field: 'id_usuario_fk' 
+		} 
+	});
+	Alerta.belongsTo(Usuario, { 
+		foreignKey: { 
+			name: 'idUsuario'
+			, field: 'id_usuario_fk' 
+		} 
+	});	
 
-	Circuito.hasMany(Alerta, { foreignKey: 'idCircuito' } );
-	Alerta.belongsTo(Circuito, { foreignKey: 'idCircuito' } );
+	Circuito.hasMany(Alerta, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk' 
+		} 
+	});
+	Alerta.belongsTo(Circuito, { 
+		foreignKey: { 
+			name: 'idCircuito'
+			, field: 'id_circuito_fk' 
+		} 
+	});
 
 	return Alerta;
 }

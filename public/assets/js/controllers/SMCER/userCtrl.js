@@ -41,7 +41,8 @@ app.controller('userCtrlConsult', ["$scope", "$filter", "ngTableParams", "User",
     
 }]);
 
-app.controller('userCtrlSave', ["$scope", "User", function ($scope, User) {
+app.controller('userCtrlSave', ["$scope", "User","ValidatorService", 
+    function ($scope, User, ValidatorService) {
     
     $scope.save = function (Form) {
 

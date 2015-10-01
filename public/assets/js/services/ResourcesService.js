@@ -11,3 +11,31 @@ angular.module('SMCERApp').factory('Auth', function($resource) {
         'login' : {method : 'POST'}
     });
 });
+
+// Resource of Alerts
+angular.module('SMCERApp').factory('Alert', function($resource) {
+    return $resource('/alertas', { 
+    	'getAll': { method: 'GET', params: {id: '@id'} }
+    });
+});
+
+// Resource of Alerts
+angular.module('SMCERApp').factory('AlertRemove', function($resource) {
+    return $resource('/alertas/:id', {id: '@id'}, { 
+    	'removeAlert': { method: 'DELETE' }
+    });
+});
+
+// Resource of Alerts
+angular.module('SMCERApp').factory('AlertSave', function($resource) {
+    return $resource('/alertas', { 
+    	'saveAlert': { method: 'POST', params: {data: '@data'} }
+    });
+});
+
+// Resource of Circuito
+angular.module('SMCERApp').factory('Circuito', function($resource) {
+    return $resource('/circuitos', { 
+    	'getAll': { method: 'GET' }
+    });
+});

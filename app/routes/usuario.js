@@ -13,7 +13,8 @@ module.exports = function(app){
 
 	 app.route('/usuarios')
         .get(verificaAutenticacao, usuario.getAll)
-        .post(verificaAutenticacao, usuario.saveUsuario)
+        .post(verificaAutenticacao, usuario.saveUsuario);
+        
     app.route('/usuarios/:id')
         .get(verificaAutenticacao, usuario.getUsuario)
         .put(verificaAutenticacao, usuario.updateUsuario)

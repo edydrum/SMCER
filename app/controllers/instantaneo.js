@@ -1,10 +1,10 @@
 module.exports =  function (app){ 
 
-	var Instantanea = app.models.instantanea; 
+	var Instantaneo = app.models.instantaneo; 
 
 	var controller = {
-		getInstantanea: function (req, resp){
-			Instantanea.findOne()
+		getAll: function (req, resp){
+			Instantaneo.findOne( { where: { idCircuito: 0 } } )
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();

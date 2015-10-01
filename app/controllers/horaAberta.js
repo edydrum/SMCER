@@ -1,10 +1,46 @@
 module.exports =  function (app){ 
 
-	var Medicao = app.models.medicao; 
+	var HoraAberta = app.models.horaAberta; 
 
 	var controller = {
-		getMedicao: function (req, resp){
-			Medicao.findAll()
+		getAll: function (req, resp){
+			var _id = req.body.id;
+			HoraAberta.findAll( 
+				{ 	
+					include: [{
+						model: Circuito
+						, where: { idCircuito: _id }
+					}]
+				}
+			)
+			.then(function (success) {
+				resp.json(success);
+				resp.status(204).end();
+			}, function (error){
+				resp.status(500).end();
+				return console.error(error);
+			})
+		}, 
+		/*  
+			_id --> parametro passado no GET, é o id do circuito selecionado.
+			dataInicial --> parametro passado na url (primeiro parametro) data inicio para visualização do consumo
+			dataFinal --> parametro passado na url (segundo parametro) data limite para visualização do consumo
+		*/
+		getIntervalHoraAberta: function (req, resp){
+			var _id = req.body.id,
+			dataInicial = req.params.dataInicial,
+			dataFinal = req.params.dataFinal;
+			HoraAberta.findAll( 
+				{ 
+					include: [{
+						model: Circuito
+						, where: { idCircuito: _id }
+					}],
+					where: connection.and({ 
+						dataHora: { $between: [dataInicial, dataFinal] } 
+					})
+				}
+			)
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();

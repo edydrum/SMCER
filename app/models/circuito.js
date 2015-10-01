@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 
 module.exports = function() { 
 		
-	var Circuito = connection.define('Circuito', {
+	var Circuito = connection.define('circuito', {
 		id: {
 			type: Sequelize.INTEGER
 			, field: 'id'

@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "$localStorage", "ValidatorService", "Auth","SweetAlert", function ($rootScope, $scope, $state, $localStorage, ValidatorService, Auth, SweetAlert) {
+app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "$localStorage", "ValidatorService", "Auth","SweetAlert", 
+    function ($rootScope, $scope, $state, $localStorage, ValidatorService, Auth, SweetAlert) {
 
     $scope.init = function () { 
         if ($rootScope.user) {
@@ -26,7 +27,7 @@ app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "$localStorage", "
 
             Auth.login($scope.user,
                 function user(user) {
-                    console.log("User retornado: "+user);
+                    console.log("User retornado:", user);
                     $rootScope.user = user;
                     redirectApp();
                 },

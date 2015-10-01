@@ -7,14 +7,13 @@ module.exports =  function (app){
 
 	var controller = {
 		 getAll: function (req, resp){
-			var _id = req.params.idUser;
+			//var _id = req.params.id;
+			var _id = 1;
 			Alerta.findAll( 
-				{ 	
-					include: [{
-						model: Usuario
-						, where: { idUsuario: _id }
-					}, 
-					{ model: Circuito }]
+				{ 	where: { idUsuario: _id}
+					, include: [ { 
+						model: Circuito 
+					} ]
 				}
 			)
 			.then(function (success) {
@@ -24,7 +23,6 @@ module.exports =  function (app){
 					returN.push(success);
 				}
 				resp.json(returN);
-				resp.status(204).end();
 			}, function (error){
 				resp.status(500).end();
 				return console.error(error);
@@ -44,10 +42,11 @@ module.exports =  function (app){
 			var alerta = {
 				potencia: req.body.alerta.potencia
 				, habilitado: req.body.alerta.habilitado
-				, name: req.body.alerta.name
+				, nome: req.body.alerta.nome
 				, idCircuito: req.body.circuito.idCircuito
 				, idUsuario: req.body.usuario.idUsuario
 			};
+			console.log("saveAlerta", alerta)
 			Alerta.build( alerta )
 			.save()
 			.then(function (success){
@@ -62,7 +61,7 @@ module.exports =  function (app){
 			var alerta = {
 				potencia: req.body.alerta.potencia
 				, habilitado: req.body.alerta.habilitado
-				, name: req.body.alerta.name
+				, nome: req.body.alerta.nome
 				, idCircuito: req.body.circuito.idCircuito
 				, idUsuario: req.body.usuario.idUsuario
 			};	
