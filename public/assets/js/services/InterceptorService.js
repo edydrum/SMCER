@@ -1,7 +1,8 @@
 angular.module('SMCERApp').factory('httpInterceptor', ['$q','$location',function ($q,$location) {
         return {
             'response': function(response) {
-                if (response.status === 401) {
+                if (response.status == 401) {
+                    $rootScope.user = undefined;
                     $location.path('/');
                     return $q.reject(response);
                 }
@@ -10,7 +11,7 @@ angular.module('SMCERApp').factory('httpInterceptor', ['$q','$location',function
 
             'responseError': function(rejection) {
 
-                if (rejection.status === 401) {
+                if (rejection.status == 401) {
                     $location.path('/');
                     return $q.reject(rejection);
                 }

@@ -3,8 +3,8 @@
  * Controller for Manager Alert
  * Simple table with sorting and filtering on AngularJS
  */
-app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", "ngTableParams", "Alert", "AlertRemove",
-    function ($scope, $filter, $rootScope, $state, ngTableParams, Alert, AlertRemove) {    
+app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", "ngTableParams", "Alert",
+    function ($scope, $filter, $rootScope, $state, ngTableParams, Alert) {    
     
     $scope.filtro = '';
     
@@ -15,8 +15,7 @@ app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", 
     $scope.init();
 
     $scope.removeAlert = function(id) {
-        console.log('removeAlert', id)
-        AlertRemove.delete( { id: id },  
+        Alert.delete( { id: id },  
             function(alerts) {
                 $scope.alerts.splice(id, 1);
                 $scope.tableParams = createTable($scope.alerts);
@@ -62,8 +61,8 @@ app.controller('alertCtrlConsult', ["$scope", "$filter","$rootScope", "$state", 
     
 }]);
 
-app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "AlertSave", "Circuito", "ValidatorService", "SweetAlert",
-  function ($scope, $rootScope, $state, AlertSave, Circuito, ValidatorService, SweetAlert) {
+app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "Alert", "Circuito", "ValidatorService", "SweetAlert",
+  function ($scope, $rootScope, $state, Alert, Circuito, ValidatorService, SweetAlert) {
     
     $scope.alert = {};
 
@@ -78,9 +77,6 @@ app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "AlertSave", 
             function(circuitos) {
                 console.log('SERACHCIRCUITOS', circuitos);
                 $scope.circuitos = circuitos;
-                if ($scope.idUpdate == undefined) {
-                    $scope.alert.circuito = circuitos[0];
-                }
             }, 
             function(erro) {
                 console.log(erro);                               
@@ -89,24 +85,19 @@ app.controller('alertCtrlSave', ["$scope", "$rootScope", "$state", "AlertSave", 
     };    
 
     $scope.save = function (Form) {
-        console.log("FORM", Form)
 
         if (ValidatorService.validateForm(Form, false)) {
             if ($scope.idUpdate == undefined) {
-                console.log('alertScope', $scope.alert)
-                var circuito = {
-                    idCircuito: 1
-                }
-                var usuario = {
-                    idUsuario: 1
-                }
                 var data = {
-                    alerta: $scope.alert
-                    , circuito: circuito
-                    , usuario: usuario
+                    alerta : $scope.alert, 
+                    circuito : {
+                        idCircuito : $scope.alert.circuito.id
+                    }, 
+                    usuario: {
+                        idUsuario : $rootScope.user.id
+                    }
                 };
-                console.log('data', data)
-                AlertSave.save(data,
+                Alert.save(data,
                     function alert(alert) {
                         console.log("Alert retornado: " + alert);
                         $rootScope.alert = alert;

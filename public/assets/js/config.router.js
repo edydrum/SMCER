@@ -405,7 +405,9 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         icon: 'ti-layout-media-left-alt',
         ncyBreadcrumb: {
             label: 'Save'
-        }
+        },
+        resolve: loadSequence('ui.select', 'alertCtrl')
+        
     })
     .state('app.manager.users', {
         url: '/users',
@@ -424,7 +426,8 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         icon: 'ti-layout-media-left-alt',
         ncyBreadcrumb: {
             label: 'Save'
-        }
+        },
+        resolve: loadSequence('userCtrl')
     })
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
