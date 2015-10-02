@@ -7,7 +7,8 @@ module.exports =  function (app){
 
 	var controller = {
 		 getAll: function (req, resp){
-			//var _id = req.params.id;
+		 	console.log('GETALL', req.body)
+			//var _id = req.body.usuario.id;
 			var _id = 1;
 			Alerta.findAll( 
 				{ 	where: { idUsuario: _id}
@@ -29,7 +30,13 @@ module.exports =  function (app){
 			})
 		}, 		
 		getAlerta: function (req, resp){
-			Alerta.findOne( { where: { id: req.params.id } } )
+			Alerta.findOne( 
+				{ 	where: { id: req.params.id } 
+					, include: [ { 
+						model: Circuito 
+					} ]
+				} 
+			)
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();
@@ -39,12 +46,13 @@ module.exports =  function (app){
 			})
 		}, 
 		saveAlerta: function (req, resp){
+			console.log('saveAlerta', req.body)
 			var alerta = {
-				potencia: req.body.alerta.potencia
-				, habilitado: req.body.alerta.habilitado
-				, nome: req.body.alerta.nome
-				, idCircuito: req.body.circuito.idCircuito
-				, idUsuario: req.body.usuario.idUsuario
+				potencia: req.body.potencia
+				, habilitado: req.body.habilitado
+				, nome: req.body.nome
+				, idCircuito: req.body.circuito.id
+				, idUsuario: req.body.usuario.id
 			};
 			console.log("saveAlerta", alerta)
 			Alerta.build( alerta )
@@ -59,15 +67,16 @@ module.exports =  function (app){
 		}, 
 		updateAlerta: function (req, resp){
 			var alerta = {
-				potencia: req.body.alerta.potencia
-				, habilitado: req.body.alerta.habilitado
-				, nome: req.body.alerta.nome
-				, idCircuito: req.body.circuito.idCircuito
-				, idUsuario: req.body.usuario.idUsuario
+				potencia: req.body.potencia
+				, habilitado: req.body.habilitado
+				, nome: req.body.nome
+				, idCircuito: req.body.circuito.id
+				, idUsuario: req.body.usuario.id
 			};	
 			Alerta.update( alerta, { where: { id: req.params.id } } )
 			.then(function (success){
-				resp.json(success);
+				console.log('success', success)
+				//resp.json(success);
 				resp.status(204).end();
 			}, function (error){
 				resp.status(500).end();

@@ -388,27 +388,44 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
             label: 'Gerenciamento'
         }
     })
+
+    // Alerts
     .state('app.manager.alerts', {
         url: '/alerts',
-        templateUrl: "assets/views/alerts/alerts_consult.html",
+        templateUrl: "assets/views/alerts/alerts.html",
         title: 'Management of Alerts',
         icon: 'ti-layout-media-left-alt',
+        controller:'AlertListCtrl',
         ncyBreadcrumb: {
             label: 'Alertas'
         },
         resolve: loadSequence('ngTable', 'alertCtrl')
     })
-    .state('app.manager.alerts_save', {
-        url: '/alertSave',
-        templateUrl: "assets/views/alerts/alerts_save.html",
-        title: 'Create or update Alertas',
+    .state('app.manager.newAlert', {
+        url: '/alerts/new',
+        templateUrl: "assets/views/alerts/alert_add.html",
+        title: 'Create Alertas',
         icon: 'ti-layout-media-left-alt',
+        controller:'AlertCreateCtrl',
+        ncyBreadcrumb: {
+            label: 'Save'
+        },
+        resolve: loadSequence('ui.select', 'alertCtrl')
+    })    
+    .state('app.manager.editAlert', {
+        url: '/alerts/:id/edit',
+        templateUrl: "assets/views/alerts/alert_edit.html",
+        title: 'Update Alertas',
+        icon: 'ti-layout-media-left-alt',
+        controller:'AlertEditCtrl',
         ncyBreadcrumb: {
             label: 'Save'
         },
         resolve: loadSequence('ui.select', 'alertCtrl')
         
     })
+
+    // Users
     .state('app.manager.users', {
         url: '/users',
         templateUrl: "assets/views/users/consult.html",

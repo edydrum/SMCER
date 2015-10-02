@@ -45,11 +45,8 @@ app.controller('userCtrlSave', ["$scope", "User","ValidatorService",
     function ($scope, User, ValidatorService) {
     
     $scope.save = function (Form) {
-
         if (ValidatorService.validateForm(Form, false)) {
-            
             if ($scope.idUpdate == undefined) {
-                
                 User.save($scope.user,
                 function user(user) {
                     console.log("User retornado: "+user);
