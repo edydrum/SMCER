@@ -1,9 +1,8 @@
 'use strict';
 
-app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "popupService", "ngTableParams", "SweetAlert", "Alert", 
-    function($scope, $state, $filter, popupService, ngTableParams, SweetAlert, Alert){
+app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams", "SweetAlert", "Alert", 
+    function($scope, $state, $filter, ngTableParams, SweetAlert, Alert){
 
-    console.log('AlertListCtrl');
     $scope.filtro = '';
     
     $scope.init = function() {
@@ -38,17 +37,17 @@ app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "popupService", 
 
     $scope.deleteAlert = function(alert){
         alert.$delete({ id: alert.id }, 
-            function(){
+            function (alert){
                 SweetAlert.swal("Sucesso", "Alerta excluido com sucesso", "success");
-            }
-        );
+            }, function (erro){
+                SweetAlert.swal("Erro", "Aconteceu um erro inesperado", "error");
+            });
     };
 
 }]);
-app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$stateParams", "Alert", "Circuito", "SweetAlert",
-    function($scope, $rootScope, $state, $stateParams, Alert, Circuito, SweetAlert){
+app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$stateParams", "Alert", "Circuit", "SweetAlert",
+    function($scope, $rootScope, $state, $stateParams, Alert, Circuit, SweetAlert){
 
-    console.log('AlertCreateCtrl');
     $scope.init = function(){
         $scope.alert = new Alert();
         searchCircuitos();
@@ -57,7 +56,7 @@ app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$statePara
     $scope.init();
 
     function searchCircuitos() {
-        Circuito.query(   
+        Circuit.query(   
             function(circuitos) {
                 $scope.circuitos = circuitos;
                 $scope.alert.circuito = circuitos[0];
@@ -74,30 +73,26 @@ app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$statePara
         };    
         $scope.alert.$save(
             function (alert){
-                console.log("Alert retornado", alert);
                 $state.go('app.manager.alerts');
         }, function (erro){
                 console.log(erro);
-                SweetAlert.swal("Ocorreu um erro", "Alerta não foi criado", "error");
+                SweetAlert.swal("Ocorreu um erro", erro.data, "error");
         });
     }
 
 }]);
-app.controller('AlertEditCtrl', ["$scope", "$rootScope", "$state", "$stateParams", "Alert", "Circuito", "SweetAlert",
-    function($scope, $rootScope, $state, $stateParams, Alert, Circuito, SweetAlert){
+app.controller('AlertEditCtrl', ["$scope", "$rootScope", "$state", "$stateParams", "Alert", "Circuit", "SweetAlert",
+    function($scope, $rootScope, $state, $stateParams, Alert, Circuit, SweetAlert){
 
-    console.log('AlertEditCtrl');
     $scope.init = function(){
         searchCircuitos();
-        console.log('stateId', $stateParams.id);
         $scope.alert = Alert.get( { id: $stateParams.id } );
-        console.log('$scope.alert', $scope.alert);
     }
 
     $scope.init();
 
     function searchCircuitos() {
-        Circuito.query(   
+        Circuit.query(   
             function(circuitos) {
                 $scope.circuitos = circuitos;
             }, 
@@ -113,7 +108,6 @@ app.controller('AlertEditCtrl', ["$scope", "$rootScope", "$state", "$stateParams
         };
         $scope.alert.$update({id: $scope.alert.id},
             function (alert){
-                //console.log("Alert retornado", alert);
                 $state.go('app.manager.alerts');
         }, function (erro){
                 console.log(erro);

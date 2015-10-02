@@ -404,7 +404,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     .state('app.manager.newAlert', {
         url: '/alerts/new',
         templateUrl: "assets/views/alerts/alert_add.html",
-        title: 'Create Alertas',
+        title: 'Create Alerts',
         icon: 'ti-layout-media-left-alt',
         controller:'AlertCreateCtrl',
         ncyBreadcrumb: {
@@ -415,7 +415,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     .state('app.manager.editAlert', {
         url: '/alerts/:id/edit',
         templateUrl: "assets/views/alerts/alert_edit.html",
-        title: 'Update Alertas',
+        title: 'Update Alerts',
         icon: 'ti-layout-media-left-alt',
         controller:'AlertEditCtrl',
         ncyBreadcrumb: {
@@ -428,23 +428,71 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
     // Users
     .state('app.manager.users', {
         url: '/users',
-        templateUrl: "assets/views/users/consult.html",
+        templateUrl: "assets/views/users/users.html",
         title: 'Management of Users',
         icon: 'ti-layout-media-left-alt',
+        controller:'UserListCtrl',
         ncyBreadcrumb: {
             label: 'Usuários'
         },
         resolve: loadSequence('ngTable', 'userCtrl')
     })
-    .state('app.manager.users_save', {
-        url: '/save',
-        templateUrl: "assets/views/users/save.html",
-        title: 'Create or update User',
+    .state('app.manager.newUser', {
+        url: '/users/new',
+        templateUrl: "assets/views/users/user_add.html",
+        title: 'Create User',
         icon: 'ti-layout-media-left-alt',
+        controller:'UserCreateCtrl',
+        ncyBreadcrumb: {
+            label: 'Save'
+        },
+        resolve: loadSequence('userCtrl') 
+   })
+    .state('app.manager.editUser', {
+        url: '/users/:id/edit',
+        templateUrl: "assets/views/users/user_edit.html",
+        title: 'Update User',
+        icon: 'ti-layout-media-left-alt',
+        controller:'UserEditCtrl',
         ncyBreadcrumb: {
             label: 'Save'
         },
         resolve: loadSequence('userCtrl')
+    })
+    
+    // Circuits
+    .state('app.manager.circuits', {
+        url: '/circuits',
+        templateUrl: "assets/views/circuits/circuits.html",
+        title: 'Management of Circuits',
+        icon: 'ti-layout-media-left-alt',
+        controller:'CircuitListCtrl',
+        ncyBreadcrumb: {
+            label: 'Circuitos'
+        },
+        resolve: loadSequence('ngTable', 'circuitCtrl')
+    })
+    .state('app.manager.newCircuit', {
+        url: '/circuits/new',
+        templateUrl: "assets/views/circuits/circuit_add.html",
+        title: 'Create Circuit',
+        icon: 'ti-layout-media-left-alt',
+        controller:'CircuitCreateCtrl',
+        ncyBreadcrumb: {
+            label: 'Save'
+        },
+        resolve: loadSequence('circuitCtrl') 
+   })
+    .state('app.manager.editCircuit', {
+        url: '/circuits/:id/edit',
+        templateUrl: "assets/views/circuits/circuit_edit.html",
+        title: 'Update Circuit',
+        icon: 'ti-layout-media-left-alt',
+        controller:'CircuitEditCtrl',
+        ncyBreadcrumb: {
+            label: 'Save'
+        },
+        resolve: loadSequence('circuitCtrl')
     })
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
@@ -452,7 +500,7 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         var _args = arguments;
         return {
             deps: ['$ocLazyLoad', '$q',
-			function ($ocLL, $q) {
+            function ($ocLL, $q) {
 			    var promise = $q.when(1);
 			    for (var i = 0, len = _args.length; i < len; i++) {
 			        promise = promiseThen(_args[i]);

@@ -54,6 +54,9 @@ module.exports =  function (app){
 				, idCircuito: req.body.circuito.id
 				, idUsuario: req.body.usuario.id
 			};
+			if (!alerta.habilitado){
+				alerta.habilitado = false;
+			}
 			console.log("saveAlerta", alerta)
 			Alerta.build( alerta )
 			.save()

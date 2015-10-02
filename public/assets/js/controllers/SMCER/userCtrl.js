@@ -1,10 +1,8 @@
 'use strict';
-/**
- * Controller for Manager User
- * Simple table with sorting and filtering on AngularJS
- */
-app.controller('userCtrlConsult', ["$scope", "$filter", "ngTableParams", "User", function ($scope, $filter, ngTableParams, User) {    
-    
+
+app.controller('UserListCtrl', ["$scope", "$state", "$filter", "ngTableParams", "SweetAlert", "User", 
+    function($scope, $state, $filter, ngTableParams, SweetAlert, User){
+
     $scope.filtro = '';
     
     $scope.init = function() {
@@ -12,61 +10,75 @@ app.controller('userCtrlConsult', ["$scope", "$filter", "ngTableParams", "User",
     };
     
     $scope.init();
-    
-    function searchUsers() {
-        User.query(
-            function(users) {
-                $scope.users = users;
+
+    function searchUsers() {       
+        $scope.users = User.query(
+            function (users){
                 $scope.tableParams = createTable($scope.users);
-            }, 
-            function(erro) {
-                console.log(erro);                               
             }
         );
-    }
-    
+    };
+
     function createTable(data) {
         return new ngTableParams({
-            page: 1, // show first page
-            count: 10 // count per page
+            page: 1, 
+            count: 10 
         }, {
-            total: data.length, // length of data
+            total: data.length, 
             getData: function ($defer, params) {
-                // use build-in angular filter
                 var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-        }
+            }
         });
-    }
-    
-}]);
+    };    
 
-app.controller('userCtrlSave', ["$scope", "User","ValidatorService", 
-    function ($scope, User, ValidatorService) {
-    
-    $scope.save = function (Form) {
-        if (ValidatorService.validateForm(Form, false)) {
-            if ($scope.idUpdate == undefined) {
-                User.save($scope.user,
-                function user(user) {
-                    console.log("User retornado: "+user);
-                    $rootScope.user = user;
-                    redirectApp();
-                },
-                function (erro) {
-                    console.log(erro);
-                    delete $scope.user.password;
-                    SweetAlert.swal("Dados incorretos", "Usuário ou senha informados estão incorretos", "error");
-                });
-                
-            }            
-
-        }
-
+    $scope.deleteUser = function(user){
+        user.$delete({ id: user.id }, 
+            function(){
+                SweetAlert.swal("Sucesso", "Usuário excluido com sucesso", "success");
+            }
+        );
     };
-    
-    function redirectApp() {
-        $state.go('app.dashboard');
+
+}]);
+app.controller('UserCreateCtrl', ["$scope", "$state", "$stateParams", "User", "SweetAlert", 
+    function($scope, $state, $stateParams, User, SweetAlert){
+
+    $scope.init = function(){
+        $scope.user = new User();
     }
-    
+
+    $scope.init();     
+
+    $scope.addUser = function(){
+        $scope.user.$save(
+            function (user){
+                $state.go('app.manager.users');
+            }, function (erro){
+                console.log(erro);
+                SweetAlert.swal("Ocorreu um erro", erro.data, "error");
+            });
+    }
+
+}]);
+app.controller('UserEditCtrl', ["$scope", "$state", "$stateParams", "User", "SweetAlert",
+    function($scope, $state, $stateParams, User, SweetAlert){
+
+    $scope.init = function(){
+        $scope.user = User.get( { id: $stateParams.id } );
+        
+    }
+
+    $scope.init();
+
+    $scope.updateUser = function() {
+        $scope.user.$update({id: $scope.user.id},
+            function (user){
+                $state.go('app.manager.users');
+        }, function (erro){
+                console.log(erro);
+                SweetAlert.swal("Dados incorretos", "Verifique os dados digitados", "error");
+        });        
+    };
+
 }]);

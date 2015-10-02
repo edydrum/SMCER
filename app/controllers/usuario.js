@@ -22,7 +22,7 @@ module.exports = function (app){
 		getUsuario: function (req, resp){
 			Usuario.findOne( { where: { id: req.params.id } } )
 			.then(function (success){
-				resp.json(sucess);
+				resp.json(success);
 				resp.status(204).end();				
 			}, function (error){
 				resp.status(500).end();
@@ -30,6 +30,9 @@ module.exports = function (app){
 			})
 		},
 		saveUsuario: function (req, resp){
+			if (!req.body.email || !req.body.nome || req.body.senhas){
+				return resp.status(500).json('Dados incosistentes');
+			}
 			var usuario = {
 				nome: req.body.nome
 				, senha: req.body.senha
