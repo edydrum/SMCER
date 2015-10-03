@@ -19,7 +19,7 @@ module.exports = function() {
 		}	
 	},
 	{ 
-		tableName: 'consumo_hora_fechada'
+		tableName: 'consumo_media_hora'
 		, timestamps: false		
 	});
 
