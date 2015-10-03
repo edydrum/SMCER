@@ -4,7 +4,7 @@ module.exports =  function (app){
 
 	var controller = {
 		getAll: function (req, resp){
-			Instantaneo.findOne( { where: { idCircuito: 0 } } )
+			Instantaneo.findAll()
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();

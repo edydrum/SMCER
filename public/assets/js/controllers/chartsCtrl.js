@@ -82,7 +82,8 @@ app.controller('ChartCtrl1', ["$scope", function ($scope) {
     };
 
 }]);
-app.controller('ChartCtrl2', ["$scope", function ($scope) {
+
+app.controller('ChartNowCtrl', ["$scope", function ($scope) {
 
     // Chart.js Data
     $scope.data = {

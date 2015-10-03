@@ -17,7 +17,7 @@ module.exports = function() {
 		}
 	}, 
 	{
-    	tableName: 'Circuito'
+    	tableName: 'circuito'
 		, timestamps: false		
 	});
 

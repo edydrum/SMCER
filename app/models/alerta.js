@@ -1,4 +1,4 @@
-var connection = require('../../config/database');
+	var connection = require('../../config/database');
 var Sequelize = require('sequelize');
 
 module.exports = function() { 
@@ -30,7 +30,7 @@ module.exports = function() {
 		}					
 	}, 
 	{ 
-		tableName: 'Alerta'
+		tableName: 'alerta'
 		, timestamps: false		
 	});
 

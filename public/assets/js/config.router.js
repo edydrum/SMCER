@@ -495,6 +495,37 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
         resolve: loadSequence('circuitCtrl')
     })
 
+     // Page Monitoramento
+    .state('app.chart', {
+        url: '/chart',
+        template: '<div ui-view class="fade-in-up"></div>',
+        title: 'Monitoramento',
+        ncyBreadcrumb: {
+            label: 'Monitoramento'
+        }
+    })
+    .state('app.chart.openHour', {
+        url: '/openHour',
+        templateUrl: "assets/views/chart/openHour.html",
+        title: 'Por periodo de tempo',
+        icon: 'ti-layout-media-left-alt',
+        controller: 'ChartOpenHourCtrl',
+        ncyBreadcrumb: {
+            label: 'Monitor'
+        },
+        resolve: loadSequence('ui.select', 'chartCtrl')
+    })
+    .state('app.chart.now', {
+        url: '/now',
+        templateUrl: "assets/views/chart/now.html",
+        title: 'Instantaneo',
+        icon: 'ti-layout-media-left-alt',
+        ncyBreadcrumb: {
+            label: 'Monitor'
+        },
+        resolve: loadSequence('chartCtrl')
+    })
+
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
     function loadSequence() {
         var _args = arguments;

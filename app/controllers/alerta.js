@@ -11,7 +11,7 @@ module.exports =  function (app){
 			//var _id = req.body.usuario.id;
 			var _id = 1;
 			Alerta.findAll( 
-				{ 	where: { idUsuario: _id}
+				{ 	where: { id : _id}
 					, include: [ { 
 						model: Circuito 
 					} ]

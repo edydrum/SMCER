@@ -19,7 +19,7 @@ module.exports = function() {
 		}
 	}, 
 	{ 
-		tableName: 'Consumo_Instantaneo'
+		tableName: 'consumo_instantaneo'
 		, timestamps: false		
 	});
 

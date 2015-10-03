@@ -25,7 +25,7 @@ module.exports = function() {
 		}
 	}, 
 	{
-    	tableName: 'Usuario'
+    	tableName: 'usuario'
 		, timestamps: false		
 	});
 

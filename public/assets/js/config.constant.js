@@ -32,6 +32,7 @@ app.constant('JS_REQUIRES', {
         'userCtrl' : 'assets/js/controllers/SMCER/userCtrl.js',
         'circuitCtrl' : 'assets/js/controllers/SMCER/circuitCtrl.js',
         'alertCtrl' : 'assets/js/controllers/SMCER/alertCtrl.js',
+        'chartCtrl' : 'assets/js/controllers/SMCER/chartCtrl.js',
         'dashboardCtrl': 'assets/js/controllers/dashboardCtrl.js',
         'iconsCtrl': 'assets/js/controllers/iconsCtrl.js',
         'vAccordionCtrl': 'assets/js/controllers/vAccordionCtrl.js',

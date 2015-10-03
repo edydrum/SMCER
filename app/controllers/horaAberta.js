@@ -1,18 +1,12 @@
 module.exports =  function (app){ 
 
 	var HoraAberta = app.models.horaAberta; 
+	var Circuito = app.models.circuito;
 
 	var controller = {
 		getAll: function (req, resp){
-			var _id = req.body.id;
-			HoraAberta.findAll( 
-				{ 	
-					include: [{
-						model: Circuito
-						, where: { idCircuito: _id }
-					}]
-				}
-			)
+
+			HoraAberta.findAll()
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();

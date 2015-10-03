@@ -19,7 +19,7 @@ module.exports = function() {
 		}		
 	},	  
 	{ 
-		tableName: 'Consumo_Hora'
+		tableName: 'consumo_hora'
 		, timestamps: false		
 	});
 

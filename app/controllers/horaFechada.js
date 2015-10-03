@@ -3,18 +3,12 @@ var connection = require('../../config/database');
 module.exports =  function (app){ 
 
 	var HoraFechada = app.models.horaFechada; 
+	var Circuito = app.models.circuito;
 
 	var controller = {
 		getAll: function (req, resp){
 			var _id = req.body.id;
-			HoraFechada.findAll( 
-				{ 	
-					include: [{
-						model: Circuito
-						, where: { idCircuito: _id }
-					}]
-				}
-			)
+			HoraFechada.findAll()
 			.then(function (success) {
 				resp.json(success);
 				resp.status(204).end();

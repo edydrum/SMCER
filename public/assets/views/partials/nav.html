@@ -62,6 +62,30 @@
 			</li>			
         </ul>
     </li>
+    <li ng-class="{'active open':$state.includes('app.chart')}">
+		<a href="javascript:void(0)">
+			<div class="item-content">
+				<div class="item-media">
+					<i class="ti-settings"></i>
+				</div>
+				<div class="item-inner">
+					<span class="title"> Monitoramento </span><i class="icon-arrow"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="sub-menu">
+			<li ui-sref-active="active">
+				<a ui-sref="app.chart.openHour">
+					<span class="title"> Por período </span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="app.chart.now">
+					<span class="title"> Instântaneo </span>
+				</a>
+			</li>			
+        </ul>
+    </li>
 	<li ng-class="{'active open':$state.includes('app.ui')}">
 		<a href="javascript:void(0)">
 			<div class="item-content">
