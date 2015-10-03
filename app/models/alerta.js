@@ -48,10 +48,11 @@ module.exports = function() {
 	});	
 
 	Circuito.hasMany(Alerta, { 
-		foreignKey: { 
+		onDelete: 'restrict'
+		, foreignKey: { 
 			name: 'idCircuito'
 			, field: 'id_circuito_fk' 
-		} 
+		}
 	});
 	Alerta.belongsTo(Circuito, { 
 		foreignKey: { 

@@ -22,7 +22,7 @@ module.exports = function (app){
 		getCircuito: function (req, resp){
 			Circuito.findOne( { where: { id: req.params.id } } )
 			.then(function (success){
-				resp.json(sucess);
+				resp.json(success);
 				resp.status(204).end();				
 			}, function (error){
 				resp.status(500).end();
