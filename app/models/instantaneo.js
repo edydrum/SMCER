@@ -7,11 +7,10 @@ module.exports = function() {
 
 	Circuito = connection.import(__dirname + '/circuito');
 
-	Instantaneo = connection.define('consumoInstantaneo', {
+	Instantaneo = connection.define('instantaneo', {
 		hora: {
 			type: Sequelize.DATE
 			, field: 'hora'
-			, primaryKey: true
 		},
 		potencia: {
 			type: Sequelize.FLOAT
@@ -19,7 +18,7 @@ module.exports = function() {
 		}
 	}, 
 	{ 
-		tableName: 'consumo_instantaneo'
+		tableName: 'instantaneo'
 		, timestamps: false		
 	});
 
