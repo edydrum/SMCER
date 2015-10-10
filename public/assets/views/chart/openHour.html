@@ -1,0 +1,42 @@
+<div class="container-fluid container-fullw bg-white">
+	<div class="row">
+		<div class="col-md-6">
+			<label>Selecione o período</label>
+			<div class="input-group">
+				<input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="start"  is-open="startOpened" ng-init="startOpened = false" min-date="'1970-12-31'" max-date="end" ng-required="true" close-text="Close"  ng-click="startOpen($event)"/>
+				<span class="input-group-addon">to</span>
+				<input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="end" is-open="endOpened" ng-init="endOpened = false" min-date="start" max-date="'2015-06-22'" ng-required="true" close-text="Close"  ng-click="endOpen($event)" />
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label>
+					Circuito
+				</label>
+				<ui-select ng-model="chart.circuito" theme="bootstrap">
+					<ui-select-match placeholder="Selecione um circuito">
+						{{$select.selected.nome}}
+					</ui-select-match>
+					<ui-select-choices group-by="'group'" repeat="item in circuitos | filter: $select.search" required>
+						<div ng-bind-html="item.nome | highlight: $select.search"></div>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+		</div>	
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div collapse="visits" ng-init="visits=false" class="panel-wrapper">
+				<div class="panel-body">
+					<!-- /// controller:  'VisitsCtrl' -  localtion: assets/js/controllers/dashboardCtrl.js /// -->
+					<div ng-controller="ChartOpenHourCtrl" class="height-350">
+						<canvas class="tc-chart" tc-chartjs-line chart-options="options" chart-data="data" chart-legend="chart1" width="100%"></canvas>
+						<div class="margin-top-20">
+							<div tc-chartjs-legend chart-legend="chart1" class="inline pull-left"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
