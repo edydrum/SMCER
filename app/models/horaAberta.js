@@ -7,11 +7,10 @@ module.exports = function() {
 
 	Circuito = connection.import(__dirname + '/circuito');
 
-	HoraAberta = connection.define('consumoHora', {
+	HoraAberta = connection.define('mediaHoraAberta', {
 		dataHora: {
 			type: Sequelize.DATE
 			, field: 'data_hora'
-			, primaryKey: true
 		},
 		potencia: {
 			type: Sequelize.FLOAT
@@ -19,7 +18,7 @@ module.exports = function() {
 		}		
 	},	  
 	{ 
-		tableName: 'consumo_hora'
+		tableName: 'media_hora_aberta'
 		, timestamps: false		
 	});
 
