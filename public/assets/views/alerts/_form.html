@@ -20,9 +20,8 @@
 				<ui-select-match placeholder="Selecione um circuito">
 					{{$select.selected.nome}}
 				</ui-select-match>
-				<ui-select-choices group-by="'group'" repeat="item in circuitos | filter: $select.search" required>
+				<ui-select-choices repeat="item in circuitos | filter: $select.search" required>
 					<div ng-bind-html="item.nome | highlight: $select.search"></div>
-					<small ng-bind-html="item.id | highlight: $select.search"></small>
 				</ui-select-choices>
 			</ui-select>
 		</div>

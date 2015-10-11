@@ -1,6 +1,6 @@
 {
   "dashboard": {
-    "WELCOME": "Welcome to {{appName}}"
+    "WELCOME": "Seja bem vindo ao {{appName}}"
   },
   "topbar": {
     "messages": {
@@ -45,7 +45,7 @@
   },
   "sidebar": {
     "heading": {
-      "NAVIGATION": "Main Navigation",
+      "NAVIGATION": "Navegação Principal",
       "FEATURES": "Core Features",
       "DOCUMENTATION": "Documentation"
     },

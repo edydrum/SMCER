@@ -12,12 +12,12 @@ function ($rootScope, $state, $stateParams) {
     // GLOBAL APP SCOPE
     // set below basic information
     $rootScope.app = {
-        name: 'SMCER', // name of your project
-        author: 'Vinicius Carvalho', // author's name or company name
-        description: 'Sistema para Monitoramento do Consumo Elétrico Residêncial', // brief description
-        version: '1.0', // current version
-        year: ((new Date()).getFullYear()), // automatic current year (for copyright information)
-        isMobile: (function () {// true if the browser is a mobile device
+        name: 'SMCER', 
+        author: 'TCC UNIFIEO EGCNA10 - 2015',
+        description: 'Sistema para Monitoramento do Consumo Elétrico Residêncial',
+        version: '1.0',
+        year: ((new Date()).getFullYear()),
+        isMobile: (function () {
             var check = false;
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 check = true;
@@ -25,35 +25,30 @@ function ($rootScope, $state, $stateParams) {
             return check;
         })(),
         layout: {
-            isNavbarFixed: true, //true if you want to initialize the template with fixed header
-            isSidebarFixed: false, // true if you want to initialize the template with fixed sidebar
-            isSidebarClosed: false, // true if you want to initialize the template with closed sidebar
-            isFooterFixed: false, // true if you want to initialize the template with fixed footer
-            theme: 'theme-3', // indicate the theme chosen for your project
-            logo: 'assets/images/logo.png', // relative path of the project logo
+            isNavbarFixed: true,
+            isSidebarFixed: false,
+            isSidebarClosed: false,
+            isFooterFixed: false,
+            theme: 'theme-3',
+            logo: 'assets/images/logo.png',
         }
     };
 
 }]);
+
 // translate config
 app.config(['$translateProvider',
 function ($translateProvider) {
 
-    // prefix and suffix information  is required to specify a pattern
-    // You can simply use the static-files loader with this pattern:
     $translateProvider.useStaticFilesLoader({
         prefix: 'assets/i18n/',
         suffix: '.json'
     });
 
-    // Since you've now registered more then one translation table, angular-translate has to know which one to use.
-    // This is where preferredLanguage(langKey) comes in.
     $translateProvider.preferredLanguage('pt_BR');
 
-    // Store the language in the local storage
-    //$translateProvider.useLocalStorage();
-
 }]);
+
 // Angular-Loading-Bar
 // configuration
 app.config(['cfpLoadingBarProvider',

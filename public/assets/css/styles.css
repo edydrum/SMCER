@@ -624,13 +624,11 @@ h5.over-title {
 @media (min-width: 992px) {
   .navbar .navbar-right {
     position: relative;
-    margin: 1px 15px 0 0;
   }
 }
 @media (max-width: 991px) and (min-width: 767px) {
   .navbar .navbar-right {
     position: relative;
-    margin: 1px 35px 0 0;
   }
 }
 @media (min-width: 768px) {
