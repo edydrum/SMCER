@@ -2,7 +2,7 @@
 <div class="row" ng-controller='AuthCtrl'>
     <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
         <div class="logo">
-            <img ng-src="{{app.layout.logo}}" alt="{{app.name}}" />
+            <img src="assets/images/logo_antigo.png" alt="{{app.name}}" />
         </div>
         <!-- start: LOGIN BOX -->
         <div class="box-login">
@@ -26,33 +26,19 @@
 							<input type="password" class="form-control password" name="password" placeholder="{{'page.login.MESSAGE_PASSWORD' | translate}}" ng-model='user.password' required />
 							<i class="fa fa-lock"></i>
                             <span class="error text-small block" ng-if="Form.password.$dirty && Form.password.$invalid">A senha é requerida!</span>
-                        <span class="success text-small" ng-if="Form.username.$valid">Senha OK!</span>
-							<a class="forgot" ui-sref="login.forgot">
-								{{'page.login.MESSAGE_FORGOT' | translate}}
-							</a> </span>
+                            <span class="success text-small" ng-if="Form.username.$valid">Senha OK!</span>
+						</span>
                     </div>
                     <div class="form-actions">                        
                         <button name="submit" class="btn btn-primary pull-right" type="submit">
                             Login <i class="fa fa-arrow-circle-right"></i>
                         </button>
                     </div>
-                    <div class="new-account">
-                        {{'page.login.MESSAGE_DONT_ACCOUNT' | translate }}
-                        <a ui-sref="login.registration" translate="page.login.MESSAGE_CREATE_ACCOUNT">
-							Create an account
-						</a>
-                    </div>
+                    <a ui-sref="login.forgot">
+                        {{'page.login.MESSAGE_FORGOT' | translate}}
+                    </a> 
                 </fieldset>
             </form>
-            <div class='no-touch'>
-                <div class='the-icons'>
-                    <a href='/auth/github'>
-                        <div class="fa-hover col-md-2 col-sm-2 col-xs-2">
-                            <i class="fa fa-github fa-2x"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
             <!-- start: COPYRIGHT -->
             <div class="copyright">
                 {{app.year}} &copy; {{ app.name }} by {{ app.author }}.
