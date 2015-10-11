@@ -2,9 +2,9 @@ module.exports = function(app){
 
  	var horaAberta = app.controllers.horaAberta;
 
-	app.route('/horaAberta')
+	app.route('/grafico')
 		.get(horaAberta.getAll);
 
-	app.route('/horaAberta/:dataInicial/:dataFinal')
+	app.route('/grafico/:dataInicial/:dataFinal')
 		.get(horaAberta.getIntervalHoraAberta);
 }

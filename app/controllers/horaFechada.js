@@ -1,5 +1,20 @@
 var connection = require('../../config/database');
 
+function formatDate(data){
+	var string = String(data)
+	var arrayAll = string.split(" ");
+	var hour = arrayAll[4];
+
+	var dia = data.getDate();
+	if (dia.toString().length == 1)
+		dia = "0" + dia;
+	var mes = data.getMonth() + 1;
+	if (mes.toString().length == 1)
+		mes = "0" + mes;
+	var ano = data.getFullYear();
+	return dia + "/" + mes + "/" + ano + " " + hour;
+};
+
 module.exports =  function (app){ 
 
 	var HoraFechada = app.models.horaFechada; 
@@ -17,20 +32,19 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		}, 
-		/*  
-			_id --> parametro passado no GET, é o id do circuito selecionado.
-			dataInicial --> parametro passado na url (primeiro parametro) data inicio para visualização do consumo
-			dataFinal --> parametro passado na url (segundo parametro) data limite para visualização do consumo
-		*/
 		getIntervalHoraFechada: function (req, resp){
-			var _id = req.body.id,
+			var consumo = {
+				label: [],
+				data: []
+			};
+			var _id = req.params.circuito,
 			dataInicial = req.params.dataInicial,
 			dataFinal = req.params.dataFinal;
 			HoraFechada.findAll( 
 				{ 
 					include: [{
 						model: Circuito
-						, where: { idCircuito: _id }
+						, where: { id: _id }
 					}],
 					where: connection.and({ 
 						dataHora: { $between: [dataInicial, dataFinal] } 
@@ -38,7 +52,14 @@ module.exports =  function (app){
 				}
 			)
 			.then(function (success) {
-				resp.json(success);
+				for (var i = 0; i < success.length; i++) {
+					var hora = formatDate(success[i].dataValues.dataHora);
+					var	potencia = success[i].dataValues.potencia;
+				    consumo.label.push(hora);
+				    consumo.data.push(potencia);
+				};
+				console.log('SELECT', consumo)
+				resp.json(consumo);
 				resp.status(204).end();
 			}, function (error){
 				resp.status(500).end();

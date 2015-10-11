@@ -1,362 +1,406 @@
 'use strict';
 
-app.controller('ChartOpenHourCtrl', ["$scope", "$state", "SweetAlert", "Circuit", 
-    function($scope, $state, SweetAlert, Circuit) {
+app.controller('ChartOpenHourCtrl', ["$scope", "$state", "SweetAlert", "Circuit", "HoraFechada",
+	function($scope, $state, SweetAlert, Circuit, HoraFechada) {
 
-        $scope.init = function() {    
-            searchCircuitos();
-        }
+		$scope.grafic = {};
+		$scope.circuito = {};
+		$scope.circuitos = [];
 
-        $scope.init();
+		$scope.init = function() {
+			searchCircuitos();
+			gerarGraficoInicial();
+			$scope.endDateSelect = new Date();
+		}
 
-        function searchCircuitos() {
-            Circuit.query(   
-                function(circuitos) {
-                    $scope.circuitos = circuitos;
-                    $scope.circuito = circuitos[0];
-                }, 
-                function(erro) {
-                    console.log(erro);                               
-                }
-            );
-        };
+		$scope.init();
 
-        $scope.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+		function gerarGraficoInicial() {
+			var data = new Date();
+			var dataInicial = formatDate(data) + " " + "00:00:00";
+			var dataFinal = formatDate(data) + " " + " 23:59:59";
+			var circuito = 0;
 
-            $scope.opened = !$scope.opened;
-        };
-        $scope.endOpen = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.startOpened = false;
-            $scope.endOpened = !$scope.endOpened;
-        };
-        $scope.startOpen = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.endOpened = false;
-            $scope.startOpened = !$scope.startOpened;
-        };
+			HoraFechada.get({
+					dataInicial: dataInicial,
+					dataFinal: dataFinal,
+					circuito: circuito
+				},
+				function(consumo) {
+					$scope.grafic = consumo;
+					grafico();
+				},
+				function(erro) {
+					console.log('erro', erro);
+				});
+		};
 
-        $scope.data = {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-        datasets: [
-          {
-              label: 'Entrada',
-              fillColor: 'rgba(184,223,234,0.2)',
-              strokeColor: 'rgba(184,223,234,1)',
-              pointColor: 'rgba(184,223,234,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [65, 46, 35, 85, 40, 55, 92, 84, 93, 100, 43, 24]
-          },
-          {
-              label: 'Circuito 3',
-              fillColor: 'rgba(151,180,200,0.2)',
-              strokeColor: 'rgba(151,180,200,1)',
-              pointColor: 'rgba(151,180,200,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              data: [28, 10, 50, 10, 82, 57, 90, 102, 53, 132, 53, 100]
-          }
-        ]
-    };
+		function searchCircuitos() {
+			Circuit.query(
+				function(circuitos) {
+					$scope.circuitos = circuitos;
+					$scope.circuito.nome = circuitos[0].nome;
+					$scope.circuito.id = circuitos[0].id;
+				},
+				function(erro) {
+					console.log(erro);
+				});
+		};
 
-    $scope.options = {
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.opened = !$scope.opened;
+		};
+		$scope.endOpen = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.startOpened = false;
+			$scope.endOpened = !$scope.endOpened;
+		};
+		$scope.startOpen = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.endOpened = false;
+			$scope.startOpened = !$scope.startOpened;
+		};
 
-        maintainAspectRatio: false,
+		function formatDate(data) {
+			//var data = new Date();
+			var dia = data.getDate();
+			if (dia.toString().length == 1)
+				dia = "0" + dia;
+			var mes = data.getMonth() + 1;
+			if (mes.toString().length == 1)
+				mes = "0" + mes;
+			var ano = data.getFullYear();
+			return ano + "-" + mes + "-" + dia;
+		};
 
-        // Sets the chart to be responsive
-        responsive: true,
+		$scope.updateGrafic = function(circuito) {
+			if ((!$scope.start || !$scope.end) || ($scope.end < $scope.start))
+				return;
 
-        ///Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
+			if (!circuito)
+				circuito = $scope.circuito;
 
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
+			var dataInicial = formatDate($scope.start) + " " + "00:00:00";
+			var dataFinal = formatDate($scope.end) + " " + "23:59:59";
+			var circuito = circuito.id;
 
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
+			HoraFechada.get({
+					dataInicial: dataInicial,
+					dataFinal: dataFinal,
+					circuito: circuito
+				},
+				function(consumo) {
+					$scope.grafic = consumo;
+					grafico();
+				},
+				function(erro) {
+					console.log('erro', erro);
+				});
+		};
 
-        //Boolean - Whether the line is curved between points
-        bezierCurve: false,
+		function grafico() {
+			$scope.data = {
+				labels: $scope.grafic.label,
+				datasets: [{
+					label: 'Entrada',
+					fillColor: 'rgba(184,223,234,0.2)',
+					strokeColor: 'rgba(184,223,234,1)',
+					pointColor: 'rgba(184,223,234,1)',
+					pointStrokeColor: '#fff',
+					pointHighlightFill: '#fff',
+					pointHighlightStroke: 'rgba(220,220,220,1)',
+					data: $scope.grafic.data
+				}]
+			};
+		};
 
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.4,
+		$scope.options = {
 
-        //Boolean - Whether to show a dot for each point
-        pointDot: true,
+			maintainAspectRatio: false,
 
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
+			// Sets the chart to be responsive
+			responsive: true,
 
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
+			///Boolean - Whether grid lines are shown across the chart
+			scaleShowGridLines: true,
 
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
+			//String - Colour of the grid lines
+			scaleGridLineColor: 'rgba(0,0,0,.05)',
 
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
+			//Number - Width of the grid lines
+			scaleGridLineWidth: 1,
 
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
+			//Boolean - Whether the line is curved between points
+			bezierCurve: false,
 
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill: true,
+			//Number - Tension of the bezier curve between points
+			bezierCurveTension: 0.4,
 
-        // Function - on animation progress
-        onAnimationProgress: function () { },
+			//Boolean - Whether to show a dot for each point
+			pointDot: true,
 
-        // Function - on animation complete
-        onAnimationComplete: function () { },
+			//Number - Radius of each point dot in pixels
+			pointDotRadius: 4,
 
-        //String - A legend template
-        legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
-    };
+			//Number - Pixel width of point dot stroke
+			pointDotStrokeWidth: 1,
 
-}]);
+			//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+			pointHitDetectionRadius: 20,
 
-app.controller('ChartNowCtrl', ["$scope", function ($scope) {
+			//Boolean - Whether to show a stroke for datasets
+			datasetStroke: true,
 
-    $scope.data = {
-        labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
-        datasets: [
-          {
-              label: 'Circuito 1',
-              fillColor: 'rgba(220,220,220,0.2)',
-              strokeColor: 'rgba(220,220,220,1)',
-              pointColor: 'rgba(220,220,220,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [65, 59, 80, 150, 42, 45, 43]
-          },
-          {
-              label: 'Circuito 2',
-              fillColor: 'rgba(151,187,205,0.2)',
-              strokeColor: 'rgba(151,187,205,1)',
-              pointColor: 'rgba(151,187,205,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              data: [28, 48, 40, 24, 64, 300, 91]
-          },
-          {
-              label: 'Circuito 3',
-              fillColor: 'rgba(220,220,220,0.2)',
-              strokeColor: 'rgba(220,220,220,1)',
-              pointColor: 'rgba(220,220,220,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [65, 59, 180, 81, 200, 55, 40]
-          },
-          {
-              label: 'Circuito 4',
-              fillColor: 'rgba(151,187,205,0.2)',
-              strokeColor: 'rgba(151,187,205,1)',
-              pointColor: 'rgba(151,187,205,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              data: [28, 48, 40, 19, 86, 27, 190]
-          }
-        ]
-    };
+			//Number - Pixel width of dataset stroke
+			datasetStrokeWidth: 2,
 
-    $scope.options = {
-        // Sets the chart to be responsive
-        responsive: true,
+			//Boolean - Whether to fill the dataset with a colour
+			datasetFill: true,
 
-        ///Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
+			// Function - on animation progress
+			onAnimationProgress: function() {},
 
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
+			// Function - on animation complete
+			onAnimationComplete: function() {},
 
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
+			//String - A legend template
+			legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+		};
 
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
+	}
+]);
 
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.4,
+app.controller('ChartNowCtrl', ["$scope", function($scope) {
 
-        //Boolean - Whether to show a dot for each point
-        pointDot: true,
+	$scope.data = {
+		labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
+		datasets: [{
+			label: 'Circuito 1',
+			fillColor: 'rgba(220,220,220,0.2)',
+			strokeColor: 'rgba(220,220,220,1)',
+			pointColor: 'rgba(220,220,220,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(220,220,220,1)',
+			data: [65, 59, 80, 150, 42, 45, 43]
+		}, {
+			label: 'Circuito 2',
+			fillColor: 'rgba(151,187,205,0.2)',
+			strokeColor: 'rgba(151,187,205,1)',
+			pointColor: 'rgba(151,187,205,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(151,187,205,1)',
+			data: [28, 48, 40, 24, 64, 300, 91]
+		}, {
+			label: 'Circuito 3',
+			fillColor: 'rgba(220,220,220,0.2)',
+			strokeColor: 'rgba(220,220,220,1)',
+			pointColor: 'rgba(220,220,220,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(220,220,220,1)',
+			data: [65, 59, 180, 81, 200, 55, 40]
+		}, {
+			label: 'Circuito 4',
+			fillColor: 'rgba(151,187,205,0.2)',
+			strokeColor: 'rgba(151,187,205,1)',
+			pointColor: 'rgba(151,187,205,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(151,187,205,1)',
+			data: [28, 48, 40, 19, 86, 27, 190]
+		}]
+	};
 
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
+	$scope.options = {
+		// Sets the chart to be responsive
+		responsive: true,
 
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
+		///Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines: true,
 
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
+		//String - Colour of the grid lines
+		scaleGridLineColor: 'rgba(0,0,0,.05)',
 
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
+		//Number - Width of the grid lines
+		scaleGridLineWidth: 1,
 
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
+		//Boolean - Whether the line is curved between points
+		bezierCurve: true,
 
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill: true,
+		//Number - Tension of the bezier curve between points
+		bezierCurveTension: 0.4,
 
-        // Function - on animation progress
-        onAnimationProgress: function () { },
+		//Boolean - Whether to show a dot for each point
+		pointDot: true,
 
-        // Function - on animation complete
-        onAnimationComplete: function () { },
+		//Number - Radius of each point dot in pixels
+		pointDotRadius: 4,
 
-        //String - A legend template
-        legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
-    };
+		//Number - Pixel width of point dot stroke
+		pointDotStrokeWidth: 1,
 
-}]);
+		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		pointHitDetectionRadius: 20,
 
-app.controller('ChartNowCtrl2', ["$scope", function ($scope) {
+		//Boolean - Whether to show a stroke for datasets
+		datasetStroke: true,
 
-    $scope.data = {
-        labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
-        datasets: [
-          {
-              label: 'Circuito 2',
-              fillColor: 'rgba(220,220,220,0.2)',
-              strokeColor: 'rgba(220,220,220,1)',
-              pointColor: 'rgba(220,220,220,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [30, 59, 10, 81, 52, 55, 41]
-          }
-        ]
-    };
+		//Number - Pixel width of dataset stroke
+		datasetStrokeWidth: 2,
 
-    $scope.options = {
-        // Sets the chart to be responsive
-        responsive: true,
+		//Boolean - Whether to fill the dataset with a colour
+		datasetFill: true,
 
-        ///Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
+		// Function - on animation progress
+		onAnimationProgress: function() {},
 
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
+		// Function - on animation complete
+		onAnimationComplete: function() {},
 
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
-
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
-
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.4,
-
-        //Boolean - Whether to show a dot for each point
-        pointDot: true,
-
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
-
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
-
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
-
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
-
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
-
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill: true,
-
-        // Function - on animation progress
-        onAnimationProgress: function () { },
-
-        // Function - on animation complete
-        onAnimationComplete: function () { },
-
-        //String - A legend template
-        legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
-    };
+		//String - A legend template
+		legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+	};
 
 }]);
 
-app.controller('ChartNowCtrl3', ["$scope", function ($scope) {
+app.controller('ChartNowCtrl2', ["$scope", function($scope) {
 
-    $scope.data = {
-        labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
-        datasets: [
-          {
-              label: 'Circuito 3',
-              fillColor: 'rgba(220,220,220,0.2)',
-              strokeColor: 'rgba(220,220,220,1)',
-              pointColor: 'rgba(220,220,220,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [10, 20, 10, 83, 30, 57, 100]
-          }
-        ]
-    };
+	$scope.data = {
+		labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
+		datasets: [{
+			label: 'Circuito 2',
+			fillColor: 'rgba(220,220,220,0.2)',
+			strokeColor: 'rgba(220,220,220,1)',
+			pointColor: 'rgba(220,220,220,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(220,220,220,1)',
+			data: [30, 59, 10, 81, 52, 55, 41]
+		}]
+	};
 
-    $scope.options = {
-        // Sets the chart to be responsive
-        responsive: true,
+	$scope.options = {
+		// Sets the chart to be responsive
+		responsive: true,
 
-        ///Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines: true,
+		///Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines: true,
 
-        //String - Colour of the grid lines
-        scaleGridLineColor: 'rgba(0,0,0,.05)',
+		//String - Colour of the grid lines
+		scaleGridLineColor: 'rgba(0,0,0,.05)',
 
-        //Number - Width of the grid lines
-        scaleGridLineWidth: 1,
+		//Number - Width of the grid lines
+		scaleGridLineWidth: 1,
 
-        //Boolean - Whether the line is curved between points
-        bezierCurve: true,
+		//Boolean - Whether the line is curved between points
+		bezierCurve: true,
 
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension: 0.4,
+		//Number - Tension of the bezier curve between points
+		bezierCurveTension: 0.4,
 
-        //Boolean - Whether to show a dot for each point
-        pointDot: true,
+		//Boolean - Whether to show a dot for each point
+		pointDot: true,
 
-        //Number - Radius of each point dot in pixels
-        pointDotRadius: 4,
+		//Number - Radius of each point dot in pixels
+		pointDotRadius: 4,
 
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth: 1,
+		//Number - Pixel width of point dot stroke
+		pointDotStrokeWidth: 1,
 
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius: 20,
+		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		pointHitDetectionRadius: 20,
 
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke: true,
+		//Boolean - Whether to show a stroke for datasets
+		datasetStroke: true,
 
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth: 2,
+		//Number - Pixel width of dataset stroke
+		datasetStrokeWidth: 2,
 
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill: true,
+		//Boolean - Whether to fill the dataset with a colour
+		datasetFill: true,
 
-        // Function - on animation progress
-        onAnimationProgress: function () { },
+		// Function - on animation progress
+		onAnimationProgress: function() {},
 
-        // Function - on animation complete
-        onAnimationComplete: function () { },
+		// Function - on animation complete
+		onAnimationComplete: function() {},
 
-        //String - A legend template
-        legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
-    };
+		//String - A legend template
+		legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+	};
+
+}]);
+
+app.controller('ChartNowCtrl3', ["$scope", function($scope) {
+
+	$scope.data = {
+		labels: ['15:10:10', '15:10:20', '15:10:30', '15:10:40', '15:10:50', '15:11:00', '15:11:10'],
+		datasets: [{
+			label: 'Circuito 3',
+			fillColor: 'rgba(220,220,220,0.2)',
+			strokeColor: 'rgba(220,220,220,1)',
+			pointColor: 'rgba(220,220,220,1)',
+			pointStrokeColor: '#fff',
+			pointHighlightFill: '#fff',
+			pointHighlightStroke: 'rgba(220,220,220,1)',
+			data: [10, 20, 10, 83, 30, 57, 100]
+		}]
+	};
+
+	$scope.options = {
+		// Sets the chart to be responsive
+		responsive: true,
+
+		///Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines: true,
+
+		//String - Colour of the grid lines
+		scaleGridLineColor: 'rgba(0,0,0,.05)',
+
+		//Number - Width of the grid lines
+		scaleGridLineWidth: 1,
+
+		//Boolean - Whether the line is curved between points
+		bezierCurve: true,
+
+		//Number - Tension of the bezier curve between points
+		bezierCurveTension: 0.4,
+
+		//Boolean - Whether to show a dot for each point
+		pointDot: true,
+
+		//Number - Radius of each point dot in pixels
+		pointDotRadius: 4,
+
+		//Number - Pixel width of point dot stroke
+		pointDotStrokeWidth: 1,
+
+		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		pointHitDetectionRadius: 20,
+
+		//Boolean - Whether to show a stroke for datasets
+		datasetStroke: true,
+
+		//Number - Pixel width of dataset stroke
+		datasetStrokeWidth: 2,
+
+		//Boolean - Whether to fill the dataset with a colour
+		datasetFill: true,
+
+		// Function - on animation progress
+		onAnimationProgress: function() {},
+
+		// Function - on animation complete
+		onAnimationComplete: function() {},
+
+		//String - A legend template
+		legendTemplate: '<ul class="tc-chart-js-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+	};
 
 }]);

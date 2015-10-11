@@ -5,6 +5,6 @@ module.exports = function(app){
 	app.route('/horaFechada')
 		.get(horaFechada.getAll);
 
-	app.route('/horaFechada/:dataInicial/:dataFinal')
+	app.route('/horaFechada/:dataInicial/:dataFinal/:circuito')
 		.get(horaFechada.getIntervalHoraFechada);	
 }

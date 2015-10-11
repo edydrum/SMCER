@@ -25,3 +25,25 @@ angular.module('SMCERApp').factory('Circuit', function($resource) {
         update: { method: 'PUT', isArray: true }        
     });
 });
+
+// Resource of Grafico Hora Fechada
+angular.module('SMCERApp').factory('HoraFechada', function($resource) {
+    return $resource('/horaFechada/:dataInicial/:dataFinal/:circuito', 
+        {dataInicial: '@dataInicial', dataFinal: '@dataFinal', circuito: '@circuito'}, {
+        update: { method: 'PUT', isArray: true }        
+    });
+});
+
+// Resource of Grafico Hora Aberta
+angular.module('SMCERApp').factory('HoraAberta', function($resource) {
+    return $resource('/horaAberta',  {
+        update: { method: 'PUT', isArray: true }        
+    });
+});
+
+// Resource of Grafico Instantaneo
+angular.module('SMCERApp').factory('Instantaneo', function($resource) {
+    return $resource('/instantaneo',  {
+        update: { method: 'PUT', isArray: true }        
+    });
+});
