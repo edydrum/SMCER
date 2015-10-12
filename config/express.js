@@ -12,9 +12,6 @@ var passport = require('passport');
 // Carrega o módulo para segurança.
 var helmet = require('helmet');
 
-// Rotas
-//var home = require('../app/routes/home');
-
 // Carrega o módulo Express-load 
 var load = require('express-load');
 

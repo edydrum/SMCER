@@ -18,8 +18,8 @@ module.exports = function() {
 
         User.findOne( { where: { nome: login, senha : password } })
         .then(function (success){
-          console.log('Usuário autenticado com sucesso!');
-          return done(null, success);
+            console.log('Usuário autenticado com sucesso!');
+            return done(null, success);
         }, function (error){
             console.error("Erro no login: "+error);
             return done(error);

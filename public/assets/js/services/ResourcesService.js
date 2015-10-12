@@ -47,3 +47,10 @@ angular.module('SMCERApp').factory('Instantaneo', function($resource) {
         update: { method: 'PUT', isArray: true }        
     });
 });
+
+// Resource of Users
+angular.module('SMCERApp').factory('User', function($resource) {
+    return $resource('/usuarios/:id', {id:'@id'},{
+        update: { method: 'PUT', isArray: true }
+    });
+}); 

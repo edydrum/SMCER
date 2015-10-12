@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "$localStorage", "ValidatorService", "Auth","SweetAlert", 
-    function ($rootScope, $scope, $state, $localStorage, ValidatorService, Auth, SweetAlert) {
+app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "ValidatorService", "Auth","SweetAlert", 
+    function ($rootScope, $scope, $state, ValidatorService, Auth, SweetAlert) {
 
     $scope.init = function () { 
         if ($rootScope.user) {

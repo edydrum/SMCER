@@ -8,7 +8,7 @@ module.exports =  function (app){
 	var controller = {
 		 getAll: function (req, resp){
 		 	console.log('GETALL', req.body)
-			//var _id = req.body.usuario.id;
+			//var _id = req.body.id;
 			var _id = 1;
 			Alerta.findAll( 
 				{ 	where: { id : _id}

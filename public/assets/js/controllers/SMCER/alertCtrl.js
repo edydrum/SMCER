@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams", "SweetAlert", "Alert", 
-    function($scope, $state, $filter, ngTableParams, SweetAlert, Alert){
+app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams", "SweetAlert", "Alert", "$rootScope",
+    function($scope, $state, $filter, ngTableParams, SweetAlert, Alert, $rootScope){
 
     $scope.filtro = '';
     
@@ -11,7 +11,9 @@ app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams",
     
     $scope.init();
 
-    function searchAlerts() {       
+    function searchAlerts() {  
+        console.log('usuario', $rootScope.user);
+
         $scope.alerts = Alert.query(
             function (alerts){
                 for (var i = 0; i < alerts.length; i++) {
