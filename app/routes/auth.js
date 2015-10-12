@@ -7,8 +7,7 @@ module.exports = function(app) {
     });        
     
     app.post('/auth', passport.authenticate('local', 
-        {successRedirect : '/#/app/dashboard' }
-    ));
+        { successRedirect : '/#/app/dashboard' }));
     
     app.get('/auth/github', passport.authenticate('github'));
     
@@ -26,7 +25,6 @@ module.exports = function(app) {
 
 //Middleware
 function verificaAutenticacao(req, res, next) {
-    console.log('verificaAutenticacao', req.isAuthenticated)
     if (req.isAuthenticated()) {
         return next();
     } else {

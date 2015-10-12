@@ -7,11 +7,9 @@ module.exports =  function (app){
 
 	var controller = {
 		 getAll: function (req, resp){
-		 	console.log('GETALL', req.body)
-			//var _id = req.body.id;
-			var _id = 1;
+			var _id = req.params.idUser;
 			Alerta.findAll( 
-				{ 	where: { id : _id}
+				{ 	where: { idUsuario : _id}
 					, include: [ { 
 						model: Circuito 
 					} ]
@@ -46,7 +44,6 @@ module.exports =  function (app){
 			})
 		}, 
 		saveAlerta: function (req, resp){
-			console.log('saveAlerta', req.body)
 			var alerta = {
 				potencia: req.body.potencia
 				, habilitado: req.body.habilitado
@@ -57,7 +54,6 @@ module.exports =  function (app){
 			if (!alerta.habilitado){
 				alerta.habilitado = false;
 			}
-			console.log("saveAlerta", alerta)
 			Alerta.build( alerta )
 			.save()
 			.then(function (success){
@@ -78,8 +74,6 @@ module.exports =  function (app){
 			};	
 			Alerta.update( alerta, { where: { id: req.params.id } } )
 			.then(function (success){
-				console.log('success', success)
-				//resp.json(success);
 				resp.status(204).end();
 			}, function (error){
 				resp.status(500).end();

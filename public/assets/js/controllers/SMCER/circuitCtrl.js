@@ -53,7 +53,6 @@ app.controller('CircuitCreateCtrl', ["$scope", "$state", "$stateParams", "Circui
     $scope.addCircuit = function(){
         $scope.circuit.$save(
             function (circuit){
-                console.log("Circuit retornado", circuit);
                 $state.go('app.manager.circuits');
             }, function (erro){
                 console.log(erro);

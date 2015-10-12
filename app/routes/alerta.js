@@ -10,4 +10,7 @@ module.exports = function(app){
 		.get(alerta.getAlerta)
 		.put(alerta.updateAlerta)
 		.delete(alerta.deleteAlerta);
+	
+	app.route('/alertas/user/:idUser')
+		.get(alerta.getAll);
 }

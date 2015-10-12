@@ -15,7 +15,8 @@ angular.module('SMCERApp').factory('Auth', function($resource) {
 // Resource of Alerts
 angular.module('SMCERApp').factory('Alert', function($resource) {
     return $resource('/alertas/:id', {id:'@id'},{
-        update: { method: 'PUT', isArray: true }
+        'update': { method: 'PUT', isArray: true }, 
+        'getAlertByUser': { method: 'GET', url: '/alertas/user/:idUser' ,params: { idUser: '@idUser' }, isArray: true }
     });
 });    
 
@@ -50,7 +51,9 @@ angular.module('SMCERApp').factory('Instantaneo', function($resource) {
 
 // Resource of Users
 angular.module('SMCERApp').factory('User', function($resource) {
-    return $resource('/usuarios/:id', {id:'@id'},{
-        update: { method: 'PUT', isArray: true }
-    });
+    return $resource('/usuarios/:id', {id: '@id'}, {
+        'update': { method: 'PUT', isArray: true },   
+        'getUserLogged': { method: 'GET', url: '/usuarioLogado/:nome' ,params: { nome: '@nome' } }
+     
+    });  
 }); 

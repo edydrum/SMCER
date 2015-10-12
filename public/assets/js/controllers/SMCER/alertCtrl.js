@@ -12,9 +12,7 @@ app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams",
     $scope.init();
 
     function searchAlerts() {  
-        console.log('usuario', $rootScope.user);
-
-        $scope.alerts = Alert.query(
+        $scope.alerts = Alert.getAlertByUser( { idUser: $rootScope.user.id },
             function (alerts){
                 for (var i = 0; i < alerts.length; i++) {
                     $scope.alerts[i].circuito = alerts[i].circuito.nome;
@@ -71,7 +69,7 @@ app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$statePara
 
     $scope.addAlert = function(){
         $scope.alert.usuario = {
-            id: 1
+            id: $rootScope.user.id
         };    
         $scope.alert.$save(
             function (alert){
@@ -106,7 +104,7 @@ app.controller('AlertEditCtrl', ["$scope", "$rootScope", "$state", "$stateParams
 
     $scope.updateAlert = function() {
         $scope.alert.usuario = {
-            id: 1
+            id: $rootScope.user.id
         };
         $scope.alert.$update({id: $scope.alert.id},
             function (alert){

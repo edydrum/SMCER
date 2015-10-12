@@ -5,7 +5,6 @@ module.exports =  function (app){
 
 	var controller = {
 		getAll: function (req, resp){
-
 			HoraAberta.findAll()
 			.then(function (success) {
 				resp.json(success);
@@ -15,20 +14,15 @@ module.exports =  function (app){
 				return console.error(error);
 			})
 		}, 
-		/*  
-			_id --> parametro passado no GET, é o id do circuito selecionado.
-			dataInicial --> parametro passado na url (primeiro parametro) data inicio para visualização do consumo
-			dataFinal --> parametro passado na url (segundo parametro) data limite para visualização do consumo
-		*/
 		getIntervalHoraAberta: function (req, resp){
-			var _id = req.body.id,
-			dataInicial = req.params.dataInicial,
-			dataFinal = req.params.dataFinal;
+			var _id = req.params.circuito,
+				dataInicial = req.params.dataInicial,
+				dataFinal = req.params.dataFinal;
 			HoraAberta.findAll( 
 				{ 
 					include: [{
 						model: Circuito
-						, where: { idCircuito: _id }
+						, where: { id: _id }
 					}],
 					where: connection.and({ 
 						dataHora: { $between: [dataInicial, dataFinal] } 

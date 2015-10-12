@@ -27,6 +27,16 @@ module.exports = function (app){
 				resp.status(500).end();
 				return console.error(error);
 			})
+		},		
+		getUsuarioByNome: function (req, resp){
+			Usuario.findOne( { where: { nome: req.params.nome } } )
+			.then(function (success){
+				resp.json(success);
+				resp.status(204).end();				
+			}, function (error){
+				resp.status(500).end();
+				return console.error(error);
+			})
 		},
 		saveUsuario: function (req, resp){
 			if (!req.body.email || !req.body.nome || req.body.senhas){

@@ -38,8 +38,8 @@ module.exports =  function (app){
 				data: []
 			};
 			var _id = req.params.circuito,
-			dataInicial = req.params.dataInicial,
-			dataFinal = req.params.dataFinal;
+				dataInicial = req.params.dataInicial,
+				dataFinal = req.params.dataFinal;
 			HoraFechada.findAll( 
 				{ 
 					include: [{

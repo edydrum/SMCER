@@ -19,4 +19,7 @@ module.exports = function(app){
         .get(verificaAutenticacao, usuario.getUsuario)
         .put(verificaAutenticacao, usuario.updateUsuario)
         .delete(verificaAutenticacao, usuario.deleteUsuario);
+    
+    app.route('/usuarioLogado/:nome')
+        .get(verificaAutenticacao, usuario.getUsuarioByNome);
 }
