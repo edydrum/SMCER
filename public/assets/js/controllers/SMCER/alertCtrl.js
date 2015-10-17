@@ -12,7 +12,7 @@ app.controller('AlertListCtrl', ["$scope", "$state", "$filter", "ngTableParams",
     $scope.init();
 
     function searchAlerts() {  
-        $scope.alerts = Alert.getAlertByUser( { idUser: $rootScope.user.id },
+        $scope.alerts = Alert.getAlertByUser( { idUser: JSON.parse(localStorage.getItem("userSession")).id },
             function (alerts){
                 for (var i = 0; i < alerts.length; i++) {
                     $scope.alerts[i].circuito = alerts[i].circuito.nome;
@@ -69,7 +69,7 @@ app.controller('AlertCreateCtrl', ["$scope", "$rootScope", "$state", "$statePara
 
     $scope.addAlert = function(){
         $scope.alert.usuario = {
-            id: $rootScope.user.id
+            id: JSON.parse(localStorage.getItem("userSession")).id
         };    
         $scope.alert.$save(
             function (alert){
@@ -104,7 +104,7 @@ app.controller('AlertEditCtrl', ["$scope", "$rootScope", "$state", "$stateParams
 
     $scope.updateAlert = function() {
         $scope.alert.usuario = {
-            id: $rootScope.user.id
+            id: JSON.parse(localStorage.setItem("userSession")).id
         };
         $scope.alert.$update({id: $scope.alert.id},
             function (alert){

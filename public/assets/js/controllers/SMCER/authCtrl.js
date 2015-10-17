@@ -31,6 +31,7 @@ app.controller('AuthCtrl', ["$rootScope", "$scope", "$state", "ValidatorService"
                         function (success){
                             var userSession = success;
                             $rootScope.user = userSession;
+                            localStorage.setItem("userSession", JSON.stringify(userSession));
                             redirectApp();
                         }, function (error){
                             console.log('error User.getUserLogged', error)

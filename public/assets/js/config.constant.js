@@ -21,7 +21,7 @@ app.constant('JS_REQUIRES', {
         'perfect-scrollbar-plugin': ['vendor/perfect-scrollbar/js/min/perfect-scrollbar.jquery.min.js', 'vendor/perfect-scrollbar/css/perfect-scrollbar.min.css'],
         'ladda': ['vendor/ladda/dist/ladda.min.js', 'vendor/ladda/dist/ladda-themeless.min.css'],
         'sweet-alert': ['vendor/sweetalert/lib/sweet-alert.min.js', 'vendor/sweetalert/lib/sweet-alert.css'],
-        'chartjs': 'vendor/chartjs/Chart.min.js',
+        'chartjs': 'vendor/chartjs/Chart.js',
         'jquery-sparkline': 'vendor/jquery.sparkline.build/dist/jquery.sparkline.min.js',
         'ckeditor-plugin': 'vendor/ckeditor/ckeditor.js',
         'jquery-nestable-plugin': ['vendor/jquery-nestable/jquery.nestable.js'],

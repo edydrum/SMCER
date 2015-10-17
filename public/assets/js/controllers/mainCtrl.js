@@ -39,6 +39,8 @@ function ($rootScope, $scope, $state, $translate, $localStorage, $window, $docum
     // Logout
     $rootScope.logout = function() {
         delete $rootScope.user;
+        localStorage.removeItem("userSession");
+        
         $http.get('/logout').success(function(data) {
             $state.go('login.signin');
         }).error(function(statusText, status, headers, config) {

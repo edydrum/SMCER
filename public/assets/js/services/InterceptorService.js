@@ -3,6 +3,7 @@ angular.module('SMCERApp').factory('httpInterceptor', ['$q','$location',function
             'response': function(response) {
                 if (response.status == 401) {
                     $rootScope.user = undefined;
+                    $localStorage.removeItem("userSession");
                     $location.path('/');
                     return $q.reject(response);
                 }

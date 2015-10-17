@@ -67,7 +67,7 @@ body {
   font-size: 13px;
   padding: 0;
   margin: 0;
-  background: #f7f7f8;
+  background: url("../images/background.jpg") #f7f7f8 !important;
   -webkit-font-smoothing: antialiased !important;
 }
 body.bg_style_1 {
@@ -11193,3 +11193,16 @@ td.small-width {
 [date-picker] .disabled.active, [date-picker] .disabled.now {
   color: #ffffff !important;
 }
+
+.bg-blue-light {
+  background-color: rgba(246, 255, 249, 1);
+}
+
+.bg-red-light {
+  background-color: rgba(230, 212, 239, 0.2);
+}
+
+.bg-green-light {
+  background-color: rgba(238, 212, 239, 0.2);
+}
+

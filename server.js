@@ -7,6 +7,8 @@ require('./config/database');
 
 var ip = require('ip');
 
+console.log(ip.address());
+
 http.createServer(app)
 	.listen(3000, ip.address(), function() {
     	console.log('Express Https Server');
