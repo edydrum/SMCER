@@ -39,7 +39,7 @@ module.exports = function (app){
 			})
 		},
 		saveUsuario: function (req, resp){
-			if (!req.body.email || !req.body.nome || req.body.senhas){
+			if (!req.body.email || !req.body.nome || req.body.senha){
 				return resp.status(500).json('Dados incosistentes');
 			}
 			var usuario = {
