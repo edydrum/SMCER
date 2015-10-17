@@ -5,6 +5,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
+var cors = require('cors');
+
 // Carrega o módulo para autenticação.
 var session = require('express-session');
 var passport = require('passport');
@@ -19,6 +21,13 @@ var load = require('express-load');
 // Ele será responsável por retornar uma instância do Express.
 module.exports = function() {
     var app = express();
+
+    app.use(cors({
+            credentials: true, 
+            origin: '*',
+            methods : ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+            allowedHeaders : ['Content-Type', 'Accept']
+        }));
     
     // Configuração do ambiente
     app.set('port', 3000);

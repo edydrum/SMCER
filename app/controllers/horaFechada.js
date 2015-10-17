@@ -28,8 +28,8 @@ module.exports =  function (app){
 				resp.json(success);
 				resp.status(204).end();
 			}, function (error){
+				console.log(error);
 				resp.status(500).end();
-				return console.error(error);
 			})
 		}, 
 		getIntervalHoraFechada: function (req, resp){

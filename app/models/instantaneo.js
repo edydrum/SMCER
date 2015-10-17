@@ -11,6 +11,7 @@ module.exports = function() {
 		hora: {
 			type: Sequelize.DATE
 			, field: 'hora'
+			, primaryKey: true
 		},
 		potencia: {
 			type: Sequelize.FLOAT

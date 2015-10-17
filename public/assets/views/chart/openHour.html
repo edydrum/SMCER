@@ -17,9 +17,8 @@
 					<ui-select-match placeholder="Selecione um circuito">
 						{{$select.selected.nome}}
 					</ui-select-match>
-					<ui-select-choices group-by="'group'" repeat="item in circuitos | filter: $select.search" required>
+					<ui-select-choices repeat="item in circuitos | filter: $select.search" required>
 						<div ng-bind-html="item.nome | highlight: $select.search"></div>
-						<small ng-bind-html="item.id | highlight: $select.search"></small>
 					</ui-select-choices>
 				</ui-select>
 			</div>
@@ -29,7 +28,6 @@
 		<div class="col-md-12">
 			<div collapse="visits" ng-init="visits=false" class="panel-wrapper">
 				<div class="panel-body">
-					<!-- /// controller:  'VisitsCtrl' -  localtion: assets/js/controllers/dashboardCtrl.js /// -->
 					<div class="height-350">
 						<canvas class="tc-chart" tc-chartjs-line chart-options="options" chart-data="data" chart-legend="chart1" width="100%"></canvas>
 						<div class="margin-top-20">
