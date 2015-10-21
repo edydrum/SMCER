@@ -11210,3 +11210,10 @@ td.small-width {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }
+
+.big-bold {
+  float: right !important;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
